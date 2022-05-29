@@ -6,14 +6,99 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/cart/cart",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "购物车",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人中心",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#ff8319",
+		"backgroundColor": "#fff"
+	},
+	// "preloadRule": {
+	// 	"pages/index/index":{
+	// 		"packages": ["subpackage-index"],
+	// 		"network": "all"
+	// 	},
+	// 	"pages/my/my": {
+	// 		"packages": ["subpackage-my"],
+	// 		"network": "all"
+	// 	},
+	// 	"pages/cart/cart": {
+	// 		"packages": ["subpackage-cart"],
+	// 		"network": "all"
+	// 	}
+	// },
+	// "subPackages": [
+	// 	{
+	// 		"root": "subpackage-index",
+	// 		"pages": [
+				
+	// 		]
+	// 	},
+	// 	{
+	// 		"root": "subpackage-cart",
+	// 		"pages": [
+				
+	// 		]
+	// 	},
+	// 	{
+	// 		"root": "subpackage-my",
+	// 		"pages": [
+				
+	// 		]
+	// 	}
+	// ],
+	"tabBar": {
+		"color": "#B5B5B5",
+		"selectedColor": "#ff8319",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/tabbar/index.png",
+				"selectedIconPath": "static/tabbar/indexSelected.png"
+			},
+			{
+				"pagePath": "pages/cart/cart",
+				"text": "购物车",
+				"iconPath": "static/tabbar/cart.png",
+				"selectedIconPath": "static/tabbar/cartSelected.png"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"text": "个人中心",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/mySelected.png"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
 	}
 }

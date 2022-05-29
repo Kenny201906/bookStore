@@ -1,24 +1,33 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+ <view class="">
+          <!--  <u-input type="text" value="" v-model="info.account" />
+			  <u-input type="text" value="" v-model="info.password" />
+	          <button @click="submit">提交</button> -->
+ </view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				info:{
+				account: "",
+				password: ""	
+				}
+			
 			}
 		},
 		onLoad() {
-
+  
 		},
 		methods: {
-
+		// async submit(){
+		// 	   const db = uniCloud.database();
+	 //           const res = await db.collection('login').where({_id: '629322bc9b54e30001adb8f6'}).update({
+		// 		   account: this.info.account,
+		// 		   password: this.info.password
+		// 	   })
+		//  }
 		}
 	}
 </script>
