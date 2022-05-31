@@ -10,7 +10,7 @@
     </u-cell-group>
     <divider></divider>
     <view class="mt-3 mx-2">
-      <u-button class="sign-out" type="primary" @click="logout" :hair-line="false">退出登录</u-button>
+      <u-button class="custom-style" @click="logout" text="退出登录"  color="#ff9e2f"></u-button>
     </view>
   </view>
 </template>
@@ -57,12 +57,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// page {
-//   background-color: #f5f5f5;
-// // }
-// body {
-//   background-color: #f5f5f5;
-// }
-// /deep/ .u-cell-title {
-// }
+
 </style>

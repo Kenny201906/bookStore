@@ -8,26 +8,22 @@
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
+		}, {
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/cart/cart",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "购物车",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/my/my",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "个人中心",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
@@ -52,57 +48,73 @@
 		// {
 		// 	"root": "subpackage-index",
 		// 	"pages": [
-				
+
 		// 	]
 		// },
 		// {
 		// 	"root": "subpackage-cart",
 		// 	"pages": [
-				
+
 		// 	]
 		// },
 		{
 			"root": "subpackage-my",
 			"pages": [
-				
-			{
-                    "path" : "service/service",
+
+				{
+					"path": "service/service",
+					"style": {
+						"navigationBarTitleText": "我的客服",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "setting/setting",
+					"style": {
+						"navigationBarTitleText": "设置",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "currency/currency",
+					"style": {
+						"navigationBarTitleText": "通用设置",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "login/login",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "register-account/register-account",
+					"style": {
+						"navigationBarTitleText": "注册",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "order/order",
+					"style": {
+						"navigationBarTitleText": "我的订单",
+						"enablePullDownRefresh": false
+					}
+
+				}
+			    ,{
+                    "path" : "wallet/wallet",
                     "style" :                                                                                    
                 {
-                    "navigationBarTitleText": "",
+                    "navigationBarTitleText": "我的钱包",
                     "enablePullDownRefresh": false
                 }
                 
                 }
                 ,{
-                    "path" : "setting/setting",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "currency/currency",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "login/login",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "register-account/register-account",
+                    "path" : "about/about",
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "",

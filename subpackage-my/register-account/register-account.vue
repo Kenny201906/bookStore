@@ -2,7 +2,7 @@
   <view class="register d-flex j-center">
     <view class="card mt-4 p-4 d-flex flex-column a-center">
       <view>
-        <image src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/111.png" style="width: 376upx;height: 230upx;margin-bottom: 40upx;margin-left: 40upx;" mode=""></image>
+        <image src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/111.png" style="width: 376upx;height: 230upx;margin-bottom: 40upx;margin-left: 50upx;" mode=""></image>
       </view>
 
       <u--form ref="userRef" labelPosition="left" :model="userInfo" :rules="rules" labelWidth="auto">

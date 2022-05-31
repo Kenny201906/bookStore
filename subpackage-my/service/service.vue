@@ -1,9 +1,25 @@
 <template>
   <view class="wrap">
     <view class="service-banner">
-      <image class="" src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/service02.png"></image>
+      <view class="text-white" style="margin: 20px;">
+      	<view class="font-lg">
+      		用心聆听
+      	</view>
+		<view class="font-lg" style="margin-top: -10rpx;">
+			你的声音
+		</view>
+		
+		<view style="width: 60rpx;height: 6rpx; border-radius: 3rpx;background-color: white;">
+			
+		</view>
+		<view class="font-md mt-2">
+			竭诚解决你的问题
+		</view>
+      </view>
+	  
+	  <image src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/serverBg.png" mode="widthFix" class="img"></image>
     </view>
-    <divider></divider>
+
     <view class="contact mt-3">
       <block v-for="(item, index) in contact" :key="index">
         <view class="card-box mt-3">
@@ -49,6 +65,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.service-banner {
+	position: relative;
+	    display: flex;
+		width: 750rpx;
+		height: 300rpx;
+     background: linear-gradient(to bottom, #ff8319, #ff972e);;
+	 .img {
+		 position: absolute;
+		 width: 300rpx;
+		 right: 10rpx;
+		 top: 0;
+	 }
+	}
 .phone {
   height: 100rpx;
   width: 80rpx;

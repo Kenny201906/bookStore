@@ -22,7 +22,7 @@
 		<view class="navB">
 			<text class="font-weight ml-3 ">我的订单</text>
 			<view class="nav row a-center mt-2">
-				<view class="navItem span-5" @click="goToAll">
+				<view class="navItem span-5" @click="goToOrder">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E5%85%A8%E9%83%A8%E8%AE%A2%E5%8D%95.png"
@@ -30,29 +30,29 @@
 					</p>
 					<p>全部</p>
 				</view>
-				<view class="navItem span-5" @click="goToYu">
+				<view class="navItem span-5" @click="goToOrder">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E9%A2%84%E7%BA%A6%E8%AE%A2%E5%8D%95.png"
 							style="height: 60rpx;width: 60rpx;" mode=""></image>
 					</p>
-					<p>预约</p>
+					<p>借阅中</p>
 				</view>
-				<view class="navItem span-5" @click="goToIng">
+				<view class="navItem span-5" @click="goToOrder">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E8%BF%9B%E8%A1%8C%E4%B8%AD%E8%AE%A2%E5%8D%95.png"
 							style="height: 60rpx;width: 60rpx;" mode=""></image>
 					</p>
-					<p>进行中</p>
+					<p>已归还</p>
 				</view>
-				<view class="navItem span-5" @click="goToFinish">
+				<view class="navItem span-5" @click="goToOrder">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E5%B7%B2%E5%AE%8C%E6%88%90-%E8%AE%A2%E5%8D%95.png"
 							style="height: 60rpx;width: 60rpx;" mode=""></image>
 					</p>
-					<p>已完成</p>
+					<p>已购买</p>
 				</view>
 			</view>
 		</view>
@@ -95,19 +95,9 @@
 				avatar: uni.getStorageSync('userInfo').photo,
 				token: '',
 				otherNav: [{
-						name: '门店入驻',
-						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/Settled.png',
-						pageName: 'hospitalized'
-					},
-					{
 						name: '钱包',
 						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/wallet.png',
 						pageName: 'wallet'
-					},
-					{
-						name: '资质管理',
-						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/qualifications.png',
-						pageName: 'management'
 					},
 					{
 						name: '客服',
@@ -115,16 +105,22 @@
 						pageName: 'service'
 					},
 					{
-						name: '问诊模板',
-						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/Consultation.png',
+						name: '我的消息',
+						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/%E6%B6%88%E6%81%AF.png',
 						pageName: 'template',
 						needMark: false
+					},
+					{
+						name: '关于我们',
+						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/bookStore/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png',
+						pageName: 'about'
 					},
 					{
 						name: '系统设置',
 						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/setInfo.png',
 						pageName: 'setting'
-					}
+					},
+
 				]
 			};
 		},
@@ -151,17 +147,8 @@
 			goAttestation() {
 				uni.$u.route('/subpackage-home/entry-attestation/entry-attestation');
 			},
-			goToAll() {
-				uni.$u.route('/subpackage-home/orderAll/orderAll');
-			},
-			goToYu() {
-				uni.$u.route('/subpackage-home/orderYu/orderYu');
-			},
-			goToIng() {
-				uni.$u.route('/subpackage-home/orderIng/orderIng');
-			},
-			goToFinish() {
-				uni.$u.route('/subpackage-home/orderFinish/orderFinish');
+			goToOrder() {
+				uni.$u.route('/subpackage-my/order/order');
 			},
 			// 登录
 			gotoLogin() {
