@@ -1,61 +1,181 @@
 <template>
- <view class="">
-          <!--  <u-input type="text" value="" v-model="info.account" />
-			  <u-input type="text" value="" v-model="info.password" />
-	          <button @click="submit">提交</button> -->
- </view>
+	<view>
+		<view class="title px-2">
+			<view class="d-flex j-sb text-white">
+				<view class="d-flex a-center ">
+					<image src="../../static/images/定位.png" mode="widthFix" style="width:40rpx;"></image>
+					<text class="uni-text-small pl-1">{{ location }}</text>
+				</view>
+				<view class="font-md">></view>
+			</view>
+			<view class="mt-2">
+				<u-input placeholder="选择分类或搜索查找" :disabled="true" disabledColor="#ffffff" shape="circle" placeholderStyle="font-size: 26rpx;" clearable>
+					<template slot="prefix">
+						<view style="padding-left: 190rpx;"><u-icon name="search" color="#808080" size="20"></u-icon></view>
+					</template>
+				</u-input>
+			</view>
+		</view>
+		<view class="ellipsis px-3 "><u-swiper :list="banner" indicator indicatorMode="line" circular></u-swiper></view>
+		<view class="d-flex j-sb a-center px-3 font-md" style="margin-top: 100rpx;">
+			<view class="font-weight">畅销TOP10</view>
+			<view class="d-flex cate">
+				<block v-for="(item, index) in cate" :key="index">
+					<view class="cateItem" :class="currentIndex === index ? 'cateItemActive' : ''" @click="blockMove(index)">{{ item }}</view>
+					<view class="block" :style="{ left: blockleft + 'rpx' }"></view>
+				</block>
+			</view>
+		</view>
+		
+		<view class="mt-2 px-3">
+			
+		</view>
+	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				info:{
-				account: "",
-				password: ""	
-				}
-			
+const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
+let qqmapsdk;
+export default {
+	data() {
+		return {
+			location: '',
+			currentIndex: 0,
+			blockleft: -2,
+			banner: [
+				'https://img.sj33.cn/uploads/202105/0943513S4-51.jpg',
+				'https://img.zcool.cn/community/01a4fb5916c3d1a801216a3e1f7c6e.jpg@1280w_1l_2o_100sh.jpg',
+				'https://static.fotor.com.cn/assets/projects/pages/5fee5cf0-eb99-11e7-a8e5-e15db9e88c7a_69f55ce3-da17-4fab-ae9f-f4f4aee25f8f_new_thumb.jpg'
+			],
+			cate: ['日榜', '周榜', '月榜'],
+			goodsInfo: [
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					author: '刘统',
+					type: '政党读物',
+                    salesCount: 12000
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 19720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 39720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+			],
+		};
+	},
+	onLoad() {
+		const _this = this;
+		qqmapsdk = new QQMapWX({
+			key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
+		});
+		uni.getLocation({
+			type: 'wgs84',
+			success: function(res) {
+				qqmapsdk.reverseGeocoder({
+					location: {
+						latitude: res.latitude,
+						longitude: res.longitude
+					},
+					success: function(res2) {
+						_this.location = res2.result.formatted_addresses.recommend;
+					}
+				});
 			}
-		},
-		onLoad() {
-  
-		},
-		methods: {
-		// async submit(){
-		// 	   const db = uniCloud.database();
-	 //           const res = await db.collection('login').where({_id: '629322bc9b54e30001adb8f6'}).update({
-		// 		   account: this.info.account,
-		// 		   password: this.info.password
-		// 	   })
-		//  }
+		});
+	},
+	methods: {
+		blockMove(index) {
+			this.blockleft = index * 130 - 2;
+			this.currentIndex = index;
+		}
+	},
+	computed: {
+		// 数字转化
+		numberFormat(){
+           return function(value){
+			   const k = 10000;
+			   const unitArray = ['','万','亿','万亿'];
+			   
+		   }
 		}
 	}
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+<style scoped lang="scss">
+.title {
+	height: 290rpx;
+	background-color: #ff8319;
+	// background-image: linear-gradient(to bottom,#ff8319,#e2a26c);
+}
+.ellipsis {
+	width: 750rpx;
+	height: 210rpx;
+	margin-top: -105rpx;
+	background: #ff8319;
+	border-radius: 50% / 50%;
+}
+.cate {
+	position: relative;
+	width: 390rpx;
+	height: 70rpx;
+	line-height: 70rpx;
+	border-radius: 35rpx;
+	border: 2upx solid #ff8319;
+	.cateItem {
+		width: 130rpx;
+		text-align: center;
+		color: #ff8319;
+		transition: all 0.5s ease;
 	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+	.cateItemActive {
+		color: white;
 	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
+	.block {
+		position: absolute;
+		width: 130rpx;
+		height: 70rpx;
+		border-radius: 35rpx;
+		z-index: -1;
+		top: 0;
+		transition: all 0.5s ease;
+		background-color: #ff8319;
 	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+}
 </style>

@@ -21,6 +21,6 @@
 	/* 公共样式库 */
 	@import url('/common/common.css');
 	/* 基础样式 */
-	@import url('/common/zcm-main.css');
 	@import url('/common/common.scss');
+	@import url('/common/zcm-main.css');
 </style>
