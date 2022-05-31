@@ -27,8 +27,24 @@
 			</view>
 		</view>
 		
-		<view class="mt-2 px-3">
-			
+		<view class="mt-1 px-3 mb-4">
+			<block v-for="(item2,index2) in goodsInfo" :key="index2">
+				<view class="d-flex a-center mt-4">
+				<image :src="item2.src" mode="widthFix" style="width: 120rpx;"></image>
+				<view class="ml-2" style="flex: 1;">
+					<view class="font-weight">
+						{{index2 + 1}}.{{item2.name}}
+					</view>
+					<view class="text-light-muted uni-text-small">
+						{{item2.author}}·{{item2.type}}
+					</view>
+				</view>
+				<view style="width: 7em;color: #cd9157;text-align: end;">
+					{{numberFormat(item2.salesCount)}}
+				</view>
+				</view>
+			</block>
+
 		</view>
 	</view>
 </template>
@@ -131,7 +147,10 @@ export default {
            return function(value){
 			   const k = 10000;
 			   const unitArray = ['','万','亿','万亿'];
-			   
+			   const i = Math.floor(Math.log(value)/Math.log(k));
+			   const floatNumber = value >= 10000 ? (value/Math.pow(k,i)).toFixed(2) : value;
+			   const fomatString = floatNumber + unitArray[i] + '热销'
+			   return fomatString
 		   }
 		}
 	}
