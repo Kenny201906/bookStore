@@ -48,26 +48,71 @@
 	// 		"network": "all"
 	// 	}
 	// },
-	// "subPackages": [
-	// 	{
-	// 		"root": "subpackage-index",
-	// 		"pages": [
+	"subPackages": [
+		// {
+		// 	"root": "subpackage-index",
+		// 	"pages": [
 				
-	// 		]
-	// 	},
-	// 	{
-	// 		"root": "subpackage-cart",
-	// 		"pages": [
+		// 	]
+		// },
+		// {
+		// 	"root": "subpackage-cart",
+		// 	"pages": [
 				
-	// 		]
-	// 	},
-	// 	{
-	// 		"root": "subpackage-my",
-	// 		"pages": [
+		// 	]
+		// },
+		{
+			"root": "subpackage-my",
+			"pages": [
 				
-	// 		]
-	// 	}
-	// ],
+			{
+                    "path" : "service/service",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "setting/setting",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "currency/currency",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "login/login",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "register-account/register-account",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		}
+	],
 	"tabBar": {
 		"color": "#B5B5B5",
 		"selectedColor": "#ff8319",
