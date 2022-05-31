@@ -135,7 +135,7 @@ export default {
       backdrop-filter: blur(11rpx);
       border-top: 1rpx solid rgba(255, 255, 255, 0.8);
       border-left: 1rpx solid rgba(255, 255, 255, 0.8);
-      box-shadow: 6rpx 6rpx 20rpx #82bbf3;
+      box-shadow: 6rpx 6rpx 20rpx #ffa960;
       width: 690rpx;
       border-radius: 15rpx;
     }

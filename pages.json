@@ -23,7 +23,8 @@
 			}
 
 		}
-	],
+    ],
+
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",

@@ -5,7 +5,7 @@ image{will-change: transform}
 .scroll-row-item{ display: inline-block!important; }
 
 body{
-	--primary:#007bff;
+	--primary: #fd8419;
 	--secondary: #6c757d;
 	--success: #28a745;
 	--danger: #dc3545;
@@ -180,6 +180,12 @@ body{
 
 .rounded{ border-radius: 5upx; }
 .rounded-circle{ border-radius:100%; }
+.rounded-15 {
+	border-radius: 15rpx;
+}
+.rounded-20 {
+	border-radius: 20rpx;
+}
 .rounded-0{ border-radius:0; }
 
 /* color */

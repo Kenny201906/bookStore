@@ -5,6 +5,8 @@ page{
 	font-size: 28upx;
 	line-height: 1.8;
 	background: #fff;
+	font-family: PingFang SC,sans-serif,'Franklin Gothic Medium', 'Arial Narrow', Arial;
+	color: #1a1a1a;
 }
 /* 图片默认100%宽度 */
 image{  width: 100%;  }
