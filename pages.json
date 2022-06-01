@@ -2,6 +2,11 @@
 	"easycom": {
 		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
+		}
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
@@ -24,7 +29,7 @@
 			}
 
 		}
-    ],
+	],
 
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -46,13 +51,34 @@
 	// 		"network": "all"
 	// 	}
 	// },
-	"subPackages": [
-		// {
-		// 	"root": "subpackage-index",
-		// 	"pages": [
+	"subPackages": [{
+			"root": "subpackage-index",
+			"pages": [
 
-		// 	]
-		// },
+				{
+					"path": "bookDetail/bookDetail",
+					"style": {
+						"navigationBarTitleText": "图书详情",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "confirmBorrow/confirmBorrow",
+					"style": {
+						"navigationBarTitleText": "确认借阅",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "result/result",
+					"style": {
+						"navigationBarTitleText": "借阅成功",
+						"enablePullDownRefresh": false
+					}
+
+				}
+			]
+		},
 		// {
 		// 	"root": "subpackage-cart",
 		// 	"pages": [
@@ -105,26 +131,22 @@
 						"enablePullDownRefresh": false
 					}
 
+				}, {
+					"path": "wallet/wallet",
+					"style": {
+						"navigationBarTitleText": "我的钱包",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "about/about",
+					"style": {
+						"navigationBarTitleText": "关于我们",
+						"enablePullDownRefresh": false
+					}
+
 				}
-			    ,{
-                    "path" : "wallet/wallet",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "我的钱包",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "about/about",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+			]
 		}
 	],
 	"tabBar": {
