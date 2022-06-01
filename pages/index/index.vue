@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<view class="title px-2">
-			<view class="d-flex j-sb text-white">
+			<view class="d-flex j-sb text-white" @click.native="goToBookStoe">
 				<view class="d-flex a-center ">
-					<image src="../../static/images/定位.png" mode="widthFix" style="width:40rpx;"></image>
+					<image src="@/static/images/indexLocation.png" mode="widthFix" style="width:40rpx;"></image>
 					<text class="uni-text-small pl-1">{{ location }}</text>
 				</view>
 				<view class="font-md">></view>
 			</view>
-			<view class="mt-2">
+			<view class="mt-2" @click="goToSearch">
 				<u-input placeholder="选择分类或搜索查找" :disabled="true" disabledColor="#ffffff" shape="circle" placeholderStyle="font-size: 26rpx;" clearable>
 					<template slot="prefix">
 						<view style="padding-left: 190rpx;"><u-icon name="search" color="#808080" size="20"></u-icon></view>
@@ -29,10 +29,10 @@
 		
 		<view class="mt-1 px-3 mb-4">
 			
-			<swiper :duration="500" style="height: 1700rpx;" :current="currentIndex" @change="swiperChange">
-				<block v-for="(item3,index3) in cate" :key="index3">
-					<swiper-item style="height: 1700rpx;" >
-						<block v-for="(item2,index2) in goodsInfo" :key="index2">
+			<swiper :duration="500" style="height: 2050rpx;" :current="currentIndex" @change="swiperChange">
+				<block v-for="(item3,index3) in goodsInfo" :key="index3">
+					<swiper-item style="height: 2050rpx;">
+						<block v-for="(item2,index2) in item3" :key="index2">
 								<view class="d-flex a-center mt-4">
 									<view style="position: relative;">
 										<template v-if="index2 <= 2">
@@ -81,7 +81,7 @@ export default {
 			],
 			cate: ['日榜', '周榜', '月榜'],
 			goodsInfo: [
-				{
+				[{
 					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
 					name: '火种—寻找中国复兴之路',
 					author: '刘统',
@@ -128,6 +128,197 @@ export default {
 					type: '政党读物',
 				    salesCount: 9720
 				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				}],
+				[{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					author: '刘统',
+					type: '政党读物',
+                    salesCount: 12000
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 19720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 39720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				}],
+				[{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					author: '刘统',
+					type: '政党读物',
+                    salesCount: 12000
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 19720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 39720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				},
+				{
+					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
+					name: '火种—寻找中国复兴之路',
+					state: true,
+					author: '刘统',
+					type: '政党读物',
+				    salesCount: 9720
+				}]
+				
 			],
 		};
 	},
@@ -146,8 +337,14 @@ export default {
 					},
 					success: function(res2) {
 						_this.location = res2.result.formatted_addresses.recommend;
-					}
+					},
 				});
+			},
+			fail: () => {
+				uni.showToast({
+					title:'获取定位失败,请打开手机定位',
+					icon: 'none'
+				})
 			}
 		});
 	},
@@ -158,6 +355,16 @@ export default {
 		},
 		swiperChange(e){
 			this.blockMove(e.detail.current);
+		},
+		goToBookStoe(){
+			uni.navigateTo({
+				url: '/subpackage-index/bookStore-list/bookStore-list'
+			})
+		},
+		goToSearch(){
+			uni.navigateTo({
+				url: '/subpackage-index/search/search'
+			})
 		}
 	},
 	computed: {

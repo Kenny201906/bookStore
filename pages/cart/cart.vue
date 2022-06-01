@@ -32,7 +32,7 @@
 		</view>
 
        <!-- 管理购物车 -->
-	      <view class="d-flex j-center a-center edit" :style="{'right': editRight + 'px','bottom': editBottom + 'px'}" @touchstart.stop="editTouch" @click="edit" @touchmove.stop="editMove">
+	      <view class="d-flex j-center a-center edit" :style="{'right': editRight + 'px','bottom': editBottom + 'px'}"  @touchstart="editTouch"  @click.native="edit" @touchmove.stop="editMove">
 	      	<u-icon name="edit-pen" color="white" size="40"></u-icon>
 	      </view>
 		<!-- 底部结算 -->
@@ -55,7 +55,7 @@
 				<view class="d-flex a-center">
 					<text class="text-muted uni-text-small pr-1">合计</text>  <text  style="color: #e8362d" class="font-weight" >¥ {{totalPrice.toFixed(2)}}</text>
 				</view>
-				 <view class="buyBtn">
+				 <view class="buyBtn" @click="buy">
 				 	 结算({{total}})
 				 </view>
 				</template>
@@ -179,7 +179,8 @@ export default {
           this.fingerInnerX = e.changedTouches[0].clientX - (this.windowWidth - this.editRight - 60);
 		  this.fingerInnerY = e.changedTouches[0].clientY - (this.windowHeight - this.editBottom - 60);
 		},
-		editMove(e) {
+		editMove(e) {		
+	
 		 const editBottom = (this.windowHeight - e.touches[0].clientY - 60 ) + this.fingerInnerY;
 		 if(editBottom >= 51 && editBottom <=  this.maxBottom) {
 			 this.editBottom = editBottom
@@ -189,7 +190,6 @@ export default {
 			 this.editRight = editRight
 		 }
 		},
-		
 		edit(){
 			this.isEdit = !this.isEdit
 		},
@@ -203,6 +203,18 @@ export default {
 					}
 				}
 			});
+		},
+		buy(){
+			if(this.total <=0 ){
+				uni.showToast({
+					title: '请至少选择一件商品',
+					icon: 'none'
+				})
+			}else{
+				uni.navigateTo({
+					url: `/subpackage-cart/settlement/settlement?total=${this.total}&totalPrice=${this.totalPrice}`
+				})
+			}
 		}
 	}
 };

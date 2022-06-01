@@ -32,33 +32,59 @@
 		"navigationBarBackgroundColor": "#ff8319",
 		"backgroundColor": "#fff"
 	},
-	// "preloadRule": {
-	// 	"pages/index/index":{
-	// 		"packages": ["subpackage-index"],
-	// 		"network": "all"
-	// 	},
-	// 	"pages/my/my": {
-	// 		"packages": ["subpackage-my"],
-	// 		"network": "all"
-	// 	},
-	// 	"pages/cart/cart": {
-	// 		"packages": ["subpackage-cart"],
-	// 		"network": "all"
-	// 	}
-	// },
+	"preloadRule": {
+		"pages/index/index":{
+			"packages": ["subpackage-index"],
+			"network": "all"
+		},
+		"pages/my/my": {
+			"packages": ["subpackage-my"],
+			"network": "all"
+		},
+		"pages/cart/cart": {
+			"packages": ["subpackage-cart"],
+			"network": "all"
+		}
+	},
 	"subPackages": [
-		// {
-		// 	"root": "subpackage-index",
-		// 	"pages": [
+		{
+			"root": "subpackage-index",
+			"pages": [
+            {
+                    "path" : "bookStore-list/bookStore-list",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "书店列表",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "search/search",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "搜索",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
+		{
+			"root": "subpackage-cart",
+			"pages": [
 
-		// 	]
-		// },
-		// {
-		// 	"root": "subpackage-cart",
-		// 	"pages": [
-
-		// 	]
-		// },
+			{
+                    "path" : "settlement/settlement",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "结算",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		},
 		{
 			"root": "subpackage-my",
 			"pages": [
