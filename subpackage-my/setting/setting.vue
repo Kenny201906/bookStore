@@ -2,7 +2,7 @@
   <view class="wrap">
     <divider></divider>
     <u-cell-group :border="false">
-      <u-cell title="通用" @click="navTo('/subpackage-my/currency/currency')" :isLink="true"></u-cell>
+      <u-cell title="通用" @click="navTo" :isLink="true"></u-cell>
       <divider></divider>
       <u-cell title="版本更新" @click="openSettings" :isLink="true"></u-cell>
       <u-cell title="隐私政策" @click="navTo('')" :isLink="true"></u-cell>
@@ -20,9 +20,9 @@ export default {
     return {};
   },
   methods: {
-    navTo(url) {
+    navTo() {
       uni.navigateTo({
-        url: url
+        url: '/subpackage-my/currency/currency'
       });
     },
     openSettings() {

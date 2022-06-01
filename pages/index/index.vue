@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="title px-2">
-			<view class="d-flex j-sb text-white" @click.native="goToBookStoe">
+			<view class="d-flex j-sb text-white" @click.native="goToBookStore">
 				<view class="d-flex a-center ">
 					<image src="@/static/images/indexLocation.png" mode="widthFix" style="width:40rpx;"></image>
 					<text class="uni-text-small pl-1">{{ location }}</text>
@@ -11,29 +11,33 @@
 			<view class="mt-2" @click="goToSearch">
 				<u-input placeholder="选择分类或搜索查找" :disabled="true" disabledColor="#ffffff" shape="circle" placeholderStyle="font-size: 26rpx;" clearable>
 					<template slot="prefix">
-						<view style="padding-left: 190rpx;"><u-icon name="search" color="#808080" size="20"></u-icon></view>
+						<view style="padding-left: 190rpx;">
+							<u-icon name="search" color="#808080" size="20"></u-icon>
+						</view>
 					</template>
 				</u-input>
 			</view>
 		</view>
-		<view class="ellipsis px-3 "><u-swiper :list="banner" indicator indicatorMode="line" circular></u-swiper></view>
+		<view class="ellipsis px-3 ">
+			<u-swiper :list="banner" indicator indicatorMode="line" circular></u-swiper>
+		</view>
 		<view class="d-flex j-sb a-center px-3 font-md" style="margin-top: 100rpx;">
 			<view class="font-weight">畅销TOP10</view>
 			<view class="d-flex cate">
 				<block v-for="(item, index) in cate" :key="index">
-					<view class="cateItem" :class="currentIndex === index ? 'cateItemActive' : ''" @click="blockMove(index)">{{ item }}</view>
+					<view class="cateItem" :class="currentIndex === index ? 'cateItemActive' : ''"
+						@click="blockMove(index)">{{ item }}</view>
 					<view class="block" :style="{ left: blockleft + 'rpx' }"></view>
 				</block>
 			</view>
 		</view>
-		
-		<view class="mt-1 px-3 mb-4">
-			
+
+		<view class="mt-1 px-3 mb-4">	
 			<swiper :duration="500" style="height: 2050rpx;" :current="currentIndex" @change="swiperChange">
 				<block v-for="(item3,index3) in goodsInfo" :key="index3">
 					<swiper-item style="height: 2050rpx;">
 						<block v-for="(item2,index2) in item3" :key="index2">
-								<view class="d-flex a-center mt-4">
+								<view class="d-flex a-center mt-4"  @click="goDetails">
 									<view style="position: relative;">
 										<template v-if="index2 <= 2">
 											<view :class="['imgBadge','imgBadge' + index2]">No.{{index2 + 1}}</view>
@@ -42,6 +46,7 @@
 										<image :src="item2.src" mode="widthFix" style="width: 150rpx;"></image>
 									</view>	                 	
 						     
+
 								<view class="ml-2" style="flex: 1;">
 									<view class="font-weight">
 										{{item2.name}}
@@ -53,13 +58,13 @@
 								<view style="width: 7em;color: #cd9157;text-align: end;">
 									{{numberFormat(item2.salesCount)}}
 								</view>
-						      </view>
+							</view>
 						</block>
 					</swiper-item>
 				</block>
-		
+
 			</swiper>
-			
+
 
 		</view>
 	</view>
@@ -348,25 +353,30 @@ export default {
 			}
 		});
 	},
-	methods: {
-		blockMove(index) {
-			this.blockleft = index * 130 - 2;
-			this.currentIndex = index;
-		},
-		swiperChange(e){
-			this.blockMove(e.detail.current);
-		},
-		goToBookStoe(){
-			uni.navigateTo({
-				url: '/subpackage-index/bookStore-list/bookStore-list'
-			})
-		},
-		goToSearch(){
-			uni.navigateTo({
-				url: '/subpackage-index/search/search'
-			})
-		}
+methods:{
+	swiperChange(e){
+		this.blockMove(e.detail.current);
 	},
+	goToBookStore(){
+		uni.navigateTo({
+			url: '/subpackage-index/bookStore-list/bookStore-list'
+		})
+	},
+	goToSearch(){
+		uni.navigateTo({
+			url: '/subpackage-index/search/search'
+		})
+	},
+	blockMove(index) {
+	    this.blockleft = index * 130 - 2;
+	    this.currentIndex = index;
+	   },
+	   goDetails() {
+	    this.$u.route({
+	     url:'/subpackage-index/bookDetail/bookDetail'
+	    })
+	   }
+},
 	computed: {
 		// 数字转化
 		numberFormat(){
@@ -380,67 +390,76 @@ export default {
 		   }
 		}
 	}
-};
+	}
 </script>
 
 <style scoped lang="scss">
-.title {
-	height: 290rpx;
-	background-color: #ff8319;
-}
-.ellipsis {
-	width: 750rpx;
-	height: 210rpx;
-	margin-top: -105rpx;
-	background: #ff8319;
-	border-radius: 50% / 50%;
-}
-.cate {
-	position: relative;
-	width: 390rpx;
-	height: 70rpx;
-	line-height: 70rpx;
-	border-radius: 35rpx;
-	border: 2upx solid #ff8319;
-	.cateItem {
-		width: 130rpx;
-		text-align: center;
-		color: #ff8319;
-		transition: all 0.5s ease;
-	}
-	.cateItemActive {
-		color: white;
-	}
-	.block {
-		position: absolute;
-		width: 130rpx;
-		height: 70rpx;
-		border-radius: 35rpx;
-		z-index: -1;
-		top: 0;
-		transition: all 0.5s ease;
+	.title {
+		height: 290rpx;
 		background-color: #ff8319;
 	}
-}
-.imgBadge {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 50rpx;
-	height: 60rpx;
-	text-align: center;
-	color: white;
-	font-size: 20rpx;
-	z-index: 1;
-	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%,0 100%);
-}
-.imgBadge0 {
-	background-color: #f43628;
-}
-.imgBadge1 {
-	background-color: #ff7c14;
-}
-.imgBadge2 {
-	background-color: #fead5b;
-}
+
+	.ellipsis {
+		width: 750rpx;
+		height: 210rpx;
+		margin-top: -105rpx;
+		background: #ff8319;
+		border-radius: 50% / 50%;
+	}
+
+	.cate {
+		position: relative;
+		width: 390rpx;
+		height: 70rpx;
+		line-height: 70rpx;
+		border-radius: 35rpx;
+		border: 2upx solid #ff8319;
+
+		.cateItem {
+			width: 130rpx;
+			text-align: center;
+			color: #ff8319;
+			transition: all 0.5s ease;
+		}
+
+		.cateItemActive {
+			color: white;
+		}
+
+		.block {
+			position: absolute;
+			width: 130rpx;
+			height: 70rpx;
+			border-radius: 35rpx;
+			z-index: -1;
+			top: 0;
+			transition: all 0.5s ease;
+			background-color: #ff8319;
+		}
+	}
+
+	.imgBadge {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 50rpx;
+		height: 60rpx;
+		text-align: center;
+		color: white;
+		font-size: 20rpx;
+		z-index: 1;
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+	}
+
+	.imgBadge0 {
+		background-color: #f43628;
+	}
+
+	.imgBadge1 {
+		background-color: #ff7c14;
+	}
+
+	.imgBadge2 {
+		background-color: #fead5b;
+	}
 </style>
