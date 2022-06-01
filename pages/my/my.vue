@@ -9,7 +9,7 @@
 					<view class="username ml-1">
 						<text class="line-h0 font-md font-weight">{{ username }}</text>
 						<view class="font-md font-weight" @click="goSetInfo">{{ userInfo.name }}</view>
-						<view class="" @click="goSetInfo">设置个人信息</view>
+						<view class="" @click="aaa">设置个人信息</view>
 					</view>
 				</view>
 				<template v-if="!token">
@@ -18,7 +18,8 @@
 			</view>
 		</view>
 		<!-- 分割线 -->
-		<view class="divider"></view>
+		<view class="divider" @click="aaa"></view>
+		
 		<view class="navB">
 			<text class="font-weight ml-3 ">我的订单</text>
 			<view class="nav row a-center mt-2">
@@ -152,7 +153,7 @@
 			},
 			// 登录
 			gotoLogin() {
-				uni.navigateTo({
+				wx.navigateTo({
 					url: '/subpackage-my/login/login'
 				});
 			},
@@ -185,6 +186,13 @@
 						url: '/subpackage-my/login/login'
 					});
 				}
+			},
+			aaa(){
+			wx.scanCode({
+				success(res) {
+					console.log(res);
+				}
+			})
 			}
 		},
 		created() {}
