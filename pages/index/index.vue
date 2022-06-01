@@ -28,22 +28,38 @@
 		</view>
 		
 		<view class="mt-1 px-3 mb-4">
-			<block v-for="(item2,index2) in goodsInfo" :key="index2">
-				<view class="d-flex a-center mt-4">
-				<image :src="item2.src" mode="widthFix" style="width: 120rpx;"></image>
-				<view class="ml-2" style="flex: 1;">
-					<view class="font-weight">
-						{{index2 + 1}}.{{item2.name}}
-					</view>
-					<view class="text-light-muted uni-text-small">
-						{{item2.author}}·{{item2.type}}
-					</view>
-				</view>
-				<view style="width: 7em;color: #cd9157;text-align: end;">
-					{{numberFormat(item2.salesCount)}}
-				</view>
-				</view>
-			</block>
+			
+			<swiper :duration="500" style="height: 1700rpx;" :current="currentIndex" @change="swiperChange">
+				<block v-for="(item3,index3) in cate" :key="index3">
+					<swiper-item style="height: 1700rpx;" >
+						<block v-for="(item2,index2) in goodsInfo" :key="index2">
+								<view class="d-flex a-center mt-4">
+									<view style="position: relative;">
+										<template v-if="index2 <= 2">
+											<view :class="['imgBadge','imgBadge' + index2]">No.{{index2 + 1}}</view>
+										</template>
+										
+										<image :src="item2.src" mode="widthFix" style="width: 150rpx;"></image>
+									</view>	                 	
+						     
+								<view class="ml-2" style="flex: 1;">
+									<view class="font-weight">
+										{{item2.name}}
+									</view>
+									<view class="text-light-muted uni-text-small">
+										{{item2.author}}·{{item2.type}}
+									</view>
+								</view>
+								<view style="width: 7em;color: #cd9157;text-align: end;">
+									{{numberFormat(item2.salesCount)}}
+								</view>
+						      </view>
+						</block>
+					</swiper-item>
+				</block>
+		
+			</swiper>
+			
 
 		</view>
 	</view>
@@ -121,7 +137,7 @@ export default {
 			key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
 		});
 		uni.getLocation({
-			type: 'wgs84',
+			type: 'gcj02',
 			success: function(res) {
 				qqmapsdk.reverseGeocoder({
 					location: {
@@ -139,6 +155,9 @@ export default {
 		blockMove(index) {
 			this.blockleft = index * 130 - 2;
 			this.currentIndex = index;
+		},
+		swiperChange(e){
+			this.blockMove(e.detail.current);
 		}
 	},
 	computed: {
@@ -161,7 +180,6 @@ export default {
 .title {
 	height: 290rpx;
 	background-color: #ff8319;
-	// background-image: linear-gradient(to bottom,#ff8319,#e2a26c);
 }
 .ellipsis {
 	width: 750rpx;
@@ -196,5 +214,26 @@ export default {
 		transition: all 0.5s ease;
 		background-color: #ff8319;
 	}
+}
+.imgBadge {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 50rpx;
+	height: 60rpx;
+	text-align: center;
+	color: white;
+	font-size: 20rpx;
+	z-index: 1;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%,0 100%);
+}
+.imgBadge0 {
+	background-color: #f43628;
+}
+.imgBadge1 {
+	background-color: #ff7c14;
+}
+.imgBadge2 {
+	background-color: #fead5b;
 }
 </style>

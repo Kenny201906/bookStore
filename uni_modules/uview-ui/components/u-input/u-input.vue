@@ -181,10 +181,6 @@ export default {
             if (this.disabled) {
                 style.backgroundColor = this.disabledColor;
             }
-			console.log(this.$props.bgWhite)
-			if(this.$props.bgWhite){
-				style.backgroundColor = 'white';
-			}
             // 无边框时，去除内边距
             if (this.border === "none") {
                 style.padding = "0";

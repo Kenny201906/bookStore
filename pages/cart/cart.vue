@@ -32,7 +32,7 @@
 		</view>
 
        <!-- 管理购物车 -->
-	      <view class="d-flex j-center a-center edit" :style="{'right': editRight + 'px','bottom': editBottom + 'px'}" @touchstart="editTouch" @click="edit" @touchmove="editMove">
+	      <view class="d-flex j-center a-center edit" :style="{'right': editRight + 'px','bottom': editBottom + 'px'}" @touchstart.stop="editTouch" @click="edit" @touchmove.stop="editMove">
 	      	<u-icon name="edit-pen" color="white" size="40"></u-icon>
 	      </view>
 		<!-- 底部结算 -->

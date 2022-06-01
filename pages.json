@@ -6,7 +6,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/cart/cart",

@@ -178,9 +178,5 @@ export default {
 			type: [Function, null],
 			default: uni.$u.props.input.formatter
 		},
-		bgWhite: {
-			type: Boolean,
-			default: false
-		}
 	}
 }
