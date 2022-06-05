@@ -7,9 +7,9 @@
 				<view class="userInfo d-flex">
 					<u-avatar :src="avatar" size="50" @click="goSetInfo"></u-avatar>
 					<view class="username ml-1">
-						<text class="line-h0 font-md font-weight">{{ username }}</text>
+						<text class="line-h0 font-md font-weight">{{ userInfo.username }}</text>
 						<view class="font-md font-weight" @click="goSetInfo">{{ userInfo.name }}</view>
-						<view class="" @click="aaa">设置个人信息</view>
+						<view class="" @click="goSetInfo">设置个人信息</view>
 					</view>
 				</view>
 				<template v-if="!token">
@@ -19,7 +19,7 @@
 		</view>
 		<!-- 分割线 -->
 		<view class="divider" @click="aaa"></view>
-		
+
 		<view class="navB">
 			<text class="font-weight ml-3 ">我的订单</text>
 			<view class="nav row a-center mt-2">
@@ -93,7 +93,7 @@
 		data() {
 			return {
 				userInfo: uni.getStorageSync('userInfo') ?? '未登录用户',
-				avatar: uni.getStorageSync('userInfo').photo,
+				avatar: uni.getStorageSync('userInfo').avatar,
 				token: '',
 				otherNav: [{
 						name: '钱包',
@@ -105,16 +105,16 @@
 						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/server.png',
 						pageName: 'service'
 					},
-					{
-						name: '我的消息',
-						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/%E6%B6%88%E6%81%AF.png',
-						pageName: 'template',
-						needMark: false
-					},
+
 					{
 						name: '关于我们',
 						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/bookStore/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC.png',
 						pageName: 'about'
+					},
+					{
+						name: '切换账号',
+						src: 'https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/bookStore/switchAccount.png',
+						pageName: 'login'
 					},
 					{
 						name: '系统设置',
@@ -129,7 +129,7 @@
 			this.token = uni.getStorageSync('token');
 		},
 		async onShow() {
-			// this.token = uni.getStorageSync('token');
+			this.token = uni.getStorageSync('token');
 			// const res = await this.hasMessageAction(parseInt(uni.getStorageSync('userInfo').id));
 			// if (res.count) {
 			// 	this.otherNav[4].needMark = true;
@@ -153,7 +153,7 @@
 			},
 			// 登录
 			gotoLogin() {
-				wx.navigateTo({
+				uni.navigateTo({
 					url: '/subpackage-my/login/login'
 				});
 			},
@@ -166,11 +166,11 @@
 			goSetInfo() {
 				if (this.token) {
 					uni.navigateTo({
-						url: '/subpackage-home/setInfo/setInfo'
+						url: '/subpackage-my/setInfo/setInfo'
 					});
 				} else {
 					uni.navigateTo({
-						url: '/subpackage-home/login/login'
+						url: '/subpackage-my/login/login'
 					});
 				}
 			},
@@ -187,12 +187,12 @@
 					});
 				}
 			},
-			aaa(){
-			wx.scanCode({
-				success(res) {
-					console.log(res);
-				}
-			})
+			aaa() {
+				wx.scanCode({
+					success(res) {
+						console.log(res);
+					}
+				})
 			}
 		},
 		created() {}

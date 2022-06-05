@@ -56,7 +56,7 @@
 				applyList: [],
 
 				pageInfo: {
-					pageNmu: 1,
+					pageNum: 1,
 					pageSize: 5,
 					userId: uni.getStorageSync('userInfo').id,
 					status: 0,
@@ -67,7 +67,7 @@
 			this.pageInfo.status = option.status
 		},
 		onShow() {
-			// this.getApplyData()
+			this.getApplyData()
 		},
 		methods: {
 			handleApplyDetail(id, status) {
@@ -80,7 +80,7 @@
 			async getApplyData() {
 				const {
 					data: res
-				} = await this.$http.post('/qualification/getByIdAndStatus', this.pageInfo)
+				} = await this.$http.post('/order/myorder', {...this.pageInfo})
 				this.applyList = res.list
 			}
 		}

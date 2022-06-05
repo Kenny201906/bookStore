@@ -9,7 +9,8 @@
 				<view class="font-md">></view>
 			</view>
 			<view class="mt-2" @click="goToSearch">
-				<u-input placeholder="选择分类或搜索查找" :disabled="true" disabledColor="#ffffff" shape="circle" placeholderStyle="font-size: 26rpx;" clearable>
+				<u-input placeholder="选择分类或搜索查找" :disabled="true" disabledColor="#ffffff" shape="circle"
+					placeholderStyle="font-size: 26rpx;" clearable>
 					<template slot="prefix">
 						<view style="padding-left: 190rpx;">
 							<u-icon name="search" color="#808080" size="20"></u-icon>
@@ -32,20 +33,20 @@
 			</view>
 		</view>
 
-		<view class="mt-1 px-3 mb-4">	
-			<swiper :duration="500" style="height: 2050rpx;" :current="currentIndex" @change="swiperChange">
+		<view class="mt-1 px-3 mb-4">
+			<swiper :duration="500" style="height: 2500rpx;" :current="currentIndex" @change="swiperChange">
 				<block v-for="(item3,index3) in goodsInfo" :key="index3">
-					<swiper-item style="height: 2050rpx;">
+					<swiper-item style="height: 2500rpx;">
 						<block v-for="(item2,index2) in item3" :key="index2">
-								<view class="d-flex a-center mt-4"  @click="goDetails">
-									<view style="position: relative;">
-										<template v-if="index2 <= 2">
-											<view :class="['imgBadge','imgBadge' + index2]">No.{{index2 + 1}}</view>
-										</template>
-										
-										<image :src="item2.src" mode="widthFix" style="width: 150rpx;"></image>
-									</view>	                 	
-						     
+							<view class="d-flex a-center mt-4" @click="goDetails(item2.id)">
+								<view style="position: relative;">
+									<template v-if="index2 <= 2">
+										<view :class="['imgBadge','imgBadge' + index2]">No.{{index2 + 1}}</view>
+									</template>
+
+									<image :src="item2.src" mode="widthFix" style="width: 150rpx;"></image>
+								</view>
+
 
 								<view class="ml-2" style="flex: 1;">
 									<view class="font-weight">
@@ -71,325 +72,116 @@
 </template>
 
 <script>
-const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
-let qqmapsdk;
-export default {
-	data() {
-		return {
-			location: '',
-			currentIndex: 0,
-			blockleft: -2,
-			banner: [
-				'https://img.sj33.cn/uploads/202105/0943513S4-51.jpg',
-				'https://img.zcool.cn/community/01a4fb5916c3d1a801216a3e1f7c6e.jpg@1280w_1l_2o_100sh.jpg',
-				'https://static.fotor.com.cn/assets/projects/pages/5fee5cf0-eb99-11e7-a8e5-e15db9e88c7a_69f55ce3-da17-4fab-ae9f-f4f4aee25f8f_new_thumb.jpg'
-			],
-			cate: ['日榜', '周榜', '月榜'],
-			goodsInfo: [
-				[{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					author: '刘统',
-					type: '政党读物',
-                    salesCount: 12000
+	const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
+	let qqmapsdk;
+	export default {
+		data() {
+			return {
+				location: uni.getStorageSync('bookStore').name || '',
+				currentIndex: 0,
+				blockleft: -2,
+				banner: [
+					'https://img.sj33.cn/uploads/202105/0943513S4-51.jpg',
+					'https://img.zcool.cn/community/01a4fb5916c3d1a801216a3e1f7c6e.jpg@1280w_1l_2o_100sh.jpg',
+					'https://static.fotor.com.cn/assets/projects/pages/5fee5cf0-eb99-11e7-a8e5-e15db9e88c7a_69f55ce3-da17-4fab-ae9f-f4f4aee25f8f_new_thumb.jpg'
+				],
+				cate: ['日榜', '周榜', '月榜'],
+				goodsInfo: [1, 2, 3],
+			};
+		},
+		onLoad() {
+
+			const _this = this;
+			qqmapsdk = new QQMapWX({
+				key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
+			});
+			uni.getLocation({
+				type: 'gcj02',
+				success: function(res) {
+					qqmapsdk.reverseGeocoder({
+						location: {
+							latitude: res.latitude,
+							longitude: res.longitude
+						},
+						success: function(res2) {
+							_this.location = res2.result.formatted_addresses.recommend;
+						},
+					});
 				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 19720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 39720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				}],
-				[{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					author: '刘统',
-					type: '政党读物',
-                    salesCount: 12000
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 19720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 39720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				}],
-				[{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					author: '刘统',
-					type: '政党读物',
-                    salesCount: 12000
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 19720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 39720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-				    salesCount: 9720
-				}]
-				
-			],
-		};
-	},
-	onLoad() {
-		const _this = this;
-		qqmapsdk = new QQMapWX({
-			key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
-		});
-		uni.getLocation({
-			type: 'gcj02',
-			success: function(res) {
-				qqmapsdk.reverseGeocoder({
-					location: {
-						latitude: res.latitude,
-						longitude: res.longitude
-					},
-					success: function(res2) {
-						_this.location = res2.result.formatted_addresses.recommend;
-					},
-				});
+				fail: () => {
+					uni.showToast({
+						title: '获取定位失败,请打开手机定位',
+						icon: 'none'
+					})
+				}
+			});
+			let goodsInfoLength = this.cate.length
+			let goodsInfos = uni.getStorageSync('bookStore').bookList.map(item => {
+				return {
+					...item,
+					src: item.cover,
+					name: item.name,
+					author: item.author,
+					type: item.category,
+					salesCount: Math.floor(Math.random() * (9999 - 1000) + 1000)
+				}
+			})
+			goodsInfos = this.sortByField(goodsInfos, 'salesCount')
+			this.goodsInfo[0] = goodsInfos
+			this.goodsInfo[1] = goodsInfos
+			this.goodsInfo[2] = goodsInfos
+			console.log(goodsInfos);
+		},
+		onShow() {
+
+
+		},
+		methods: {
+			sortByField(arr, field) {
+				return arr.sort((a, b) => {
+					return b[field] - a[field]
+				})
 			},
-			fail: () => {
-				uni.showToast({
-					title:'获取定位失败,请打开手机定位',
-					icon: 'none'
+			swiperChange(e) {
+				this.blockMove(e.detail.current);
+			},
+			goToBookStore() {
+				uni.navigateTo({
+					url: '/subpackage-index/bookStore-list/bookStore-list'
+				})
+			},
+			goToSearch() {
+				uni.navigateTo({
+					url: '/subpackage-index/search/search'
+				})
+			},
+			blockMove(index) {
+				this.blockleft = index * 130 - 2;
+				this.currentIndex = index;
+			},
+			goDetails(bookId) {
+				console.log(bookId);
+				this.$u.route({
+					url: '/subpackage-index/bookDetail/bookDetail',
+					params: {
+						id: bookId
+					}
 				})
 			}
-		});
-	},
-methods:{
-	swiperChange(e){
-		this.blockMove(e.detail.current);
-	},
-	goToBookStore(){
-		uni.navigateTo({
-			url: '/subpackage-index/bookStore-list/bookStore-list'
-		})
-	},
-	goToSearch(){
-		uni.navigateTo({
-			url: '/subpackage-index/search/search'
-		})
-	},
-	blockMove(index) {
-	    this.blockleft = index * 130 - 2;
-	    this.currentIndex = index;
-	   },
-	   goDetails() {
-	    this.$u.route({
-	     url:'/subpackage-index/bookDetail/bookDetail'
-	    })
-	   }
-},
-	computed: {
-		// 数字转化
-		numberFormat(){
-           return function(value){
-			   const k = 10000;
-			   const unitArray = ['','万','亿','万亿'];
-			   const i = Math.floor(Math.log(value)/Math.log(k));
-			   const floatNumber = value >= 10000 ? (value/Math.pow(k,i)).toFixed(2) : value;
-			   const fomatString = floatNumber + unitArray[i] + '热销'
-			   return fomatString
-		   }
+		},
+		computed: {
+			// 数字转化
+			numberFormat() {
+				return function(value) {
+					const k = 10000;
+					const unitArray = ['', '万', '亿', '万亿'];
+					const i = Math.floor(Math.log(value) / Math.log(k));
+					const floatNumber = value >= 10000 ? (value / Math.pow(k, i)).toFixed(2) : value;
+					const fomatString = floatNumber + unitArray[i] + '热销'
+					return fomatString
+				}
+			}
 		}
-	}
 	}
 </script>
 

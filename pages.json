@@ -178,6 +178,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "setInfo/setInfo",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],

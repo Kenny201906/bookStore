@@ -68,11 +68,11 @@
 		},
 		data() {
 			return {
-				username: 'a123456',
+				username: 'user02',
 				fail: true,
 				active: false,
 				loginText: '登录',
-				password: 'a123456',
+				password: '123456',
 				check: true,
 				// 验证规则
 				rules: {
@@ -133,16 +133,19 @@
 						_this.loginText = '登录'
 						return;
 					}
-					const res = await _this.loginByAccountAction({
+					const res = await _this.$http.post('/user/loginByCount',{
 						username: _this.username,
 						password: _this.password
 					});
-					if (res.code !== 200) {
+					console.log(res);
+					if (res.code != 0) {
 						_this.active = !_this.active
 						_this.loginText = '登录'
 						uni.$u.toast('登录失败')
 					} else {
 						_this.fail = false;
+						uni.setStorageSync('userInfo',res.data)
+						uni.setStorageSync('token',res.data.token)
 						setTimeout(() => {
 							uni.switchTab({
 								url: '/pages/my/my'

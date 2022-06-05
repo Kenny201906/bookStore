@@ -30,7 +30,7 @@
 		},
 		methods: {
 			onBack() {
-				uni.reLaunch({
+				uni.redirectTo({
 					url: '/subpackage-index/bookDetail/bookDetail'
 				})
 			},

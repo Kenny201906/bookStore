@@ -33,7 +33,7 @@
 		</view>
 		<divider></divider>
 		<view class="" style="padding: 30rpx; margin-top: 20rpx ;height: 100%;">
-			<button type="primary" @click="confirmBorrow">确认借阅</button>
+			<button type="primary" @click="confirmBorrow" style="background-color: #ff8319;">确认借阅</button>
 		</view>
 		<u-datetime-picker :show="show" v-model="value" mode="date" closeOnClickOverlay @confirm="confirm"
 			@cancel="cancel" @change="change" @close="close"></u-datetime-picker>
