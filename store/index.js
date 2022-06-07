@@ -22,7 +22,8 @@ import {
 } from '../service/wallet/wallet.js'
 
 import {
-	addCart
+	addCart,
+	getCart
 } from '../service/cart/cart.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -81,11 +82,17 @@ const store = new Vuex.Store({
   async addCartAction({commit},payload){
 	  const res = await addCart(payload)
 	  if ( res.code !== '0') {
-	    return uni.$u.toast('提现失败');
+	    return uni.$u.toast('添加购物车失败');
 	  }
 	  return res.data
-  }
-
+  },
+  async getCartAction({commit},payload){
+	  const res = await getCart(payload)
+	  if ( res.code !== '0') {
+	    return uni.$u.toast('获取购物车失败');
+	  }
+	  return res.data
+  },
 
   },
 

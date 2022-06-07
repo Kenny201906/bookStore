@@ -12,7 +12,7 @@
 					<text class="ui-book-card__info-name">暂无</text>
 				</view>
 				<view>出版社: 新华出版社</view>
-				<view>出版时间: {{bookDetail.createTime}}</view>
+				<view>出版时间: {{bookDetail.creatTime}}</view>
 				<view>分类号: {{bookDetail.classificationNumber}}</view>
 				<view>索书号: {{bookDetail.callNumber }}</view>
 				<view>页数: {{bookDetail.pagesNumber}}</view>
@@ -86,13 +86,14 @@
 			<view class="d-flex j-sb p-3">
 				<button type="primary" class="menubar__btn_give mr-3" style="background-color: #ff8319;"
 					@click="borrowBook">借阅此书</button>
-				<button type="warn" class="menubar__btn_give ">加入购物车</button>
+				<button type="warn" class="menubar__btn_give" @click="addCart">加入购物车</button>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		data() {
 			return {
@@ -142,9 +143,11 @@
 					salesCount: Math.floor(Math.random() * (9999 - 1000) + 1000)
 				}
 			})
+			
 			this.list = this.sortByField(goodsInfos, 'salesCount')
 		},
 		methods: {
+			...mapActions(['addCartAction']),
 			sortByField(arr, field) {
 				return arr.sort((a, b) => {
 					return b[field] - a[field]
@@ -152,6 +155,22 @@
 			},
 			left() {
 				console.log('left');
+			},
+		 async addCart() {
+				const businessId = uni.getStorageSync('bookStore').id;
+			    const userId = uni.getStorageSync('userInfo').id;
+				
+			   await this.addCartAction({
+					userId: userId,
+					businessId: businessId,
+					quantity: 1,
+					book: {
+						id: this.bookId
+					}
+				})
+				uni.showToast({
+					title: '加入购物车成功'
+				});
 			},
 			right() {
 				console.log('right');

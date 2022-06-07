@@ -14,12 +14,12 @@
 					</view>
 				
 					
-					<image :src="item.src" style="width: 140rpx;height: 140rpx;"></image>
+					<image :src="item.cover" style="width: 140rpx" mode="widthFix" class="mx-1"></image>
 					<view style="flex: 1;margin-top: 80rpx;">
 				 	<view class="font-weight">{{item.name}}</view>
-						<view class="text-light-muted pb-1" style="font-size: 26rpx;">{{item.author}} · {{item.type}}</view>
+						<view class="text-light-muted pb-1" style="font-size: 26rpx;">{{item.author}} · {{item.category}}</view>
 						<view class="d-flex j-sb">
-							<view style="color: #e8362d;" class="font-weight">¥ {{(item.price * item.count).toFixed(2)}}</view>
+							<view style="color: #e8362d;" class="font-weight">¥ {{(item.unitPrice * item.count).toFixed(2)}}</view>
 							<view class="numberBox">
 								<view class="numberBtn" @click="decrease(index)">-</view>
 								<view class="numberText">{{item.count}}</view>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 export default {
 	data() {
 		return {
@@ -86,30 +87,29 @@ export default {
 			windowWidth: 0,
 			isEdit: false,
 			goodsInfo: [
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: false,
-					author: '刘统',
-					type: '政党读物',
-					price: 35.00,
-					count: 1
-				},
-				{
-					src: 'https://img.welan.com/s/2767/10822767/10822767.jpg',
-					name: '火种—寻找中国复兴之路',
-					state: true,
-					author: '刘统',
-					type: '政党读物',
-					price: 35.00,
-					count: 1
-				},
 			],
 			selectAll: false,
 		};
 	},
-	onLoad() {
+ async onLoad() {
 	 const _this = this;
+	 uni.showLoading({
+	 	title:'加载中...'
+	 })
+	 const userId = uni.getStorageSync('userInfo').id;
+	 const res = await this.getCartAction({
+		 userId: userId,
+		 pageNum: 1,
+		 pageSize: 99
+	 });
+   this.goodsInfo =  res.cart.map(item => {
+		 return {
+			 ...item.book,
+			 status: false,
+			 count: item.quantity
+		 }
+	 })
+	 uni.hideLoading()
      uni.getSystemInfo({
 	 success: function (res) {
 		_this.windowWidth = res.windowWidth;
@@ -138,6 +138,7 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions(['getCartAction']),
 		decrease(index){
 			const count = this.goodsInfo[index].count
 			if(count <= 1){
