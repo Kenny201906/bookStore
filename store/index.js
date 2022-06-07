@@ -1,30 +1,37 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import http from '../service/request/index.js';
-import message from '../service/request/message.js';
+import message from '@/service/request/message.js';
 
 import {
   getUserById
 } from '../service/user/user.js';
 
+// import {
+//   getMessageList,
+//   searchMessage,
+//   getMessage,
+//   remarkIsRead,
+//   hasMessage
+// } from '../service/message/message.js'
+
 import {
-  getMessageList,
-  searchMessage,
-  getMessage,
-  remarkIsRead,
-  hasMessage
-} from '../service/message/message.js'
+	getWalletInfo,
+	recharge,
+	withdraw
+} from '../service/wallet/wallet.js'
+
+import {
+	addCart
+} from '../service/cart/cart.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
-    scheduleListState: [],
     forcedLogin: false, //是否强制登录
     hasLogin: false,
   },
   mutations: {
-    changeScheduleList(state, scheduleList) {
-      state.scheduleListState = scheduleList
-    }
+
   },
   actions: {
   
@@ -33,7 +40,7 @@ const store = new Vuex.Store({
       commit
     }, payload) {
       const res = await getUserById(payload)
-      if (!res.code == 200) {
+      if (res.code !== '0') {
         return uni.$u.toast('请求失败');
       }
       return res.user
@@ -42,14 +49,42 @@ const store = new Vuex.Store({
 	  commit
 	}, payload) {
 	  const res = await getUserById(payload)
-	  if (!res.code == 200) {
+	  if (res.code !== '0') {
 	    return uni.$u.toast('请求失败');
 	  }
 	  return res.user
 	},
+   // 钱包相关请求
+   async getWalletInfoAction({commit},payload){
+	 const res = await getWalletInfo(payload);
+	  if (res.code !== '0') {
+	    return uni.$u.toast('请求失败');
+	  }
+	  return res.data
+   },
 
-
-
+  async rechargeAction({commit},payload){
+	  const res = await recharge(payload);
+	  if (res.code !== '0') {
+	    return uni.$u.toast('充值失败');
+	  }
+	  return res.data
+  },
+  async withdrawAction({commit},payload){
+  	  const res = await withdraw(payload);
+  	  if ( res.code !== '0') {
+  	    return uni.$u.toast('提现失败');
+  	  }
+  	  return res.data
+  },
+  // 购物车相关接口 
+  async addCartAction({commit},payload){
+	  const res = await addCart(payload)
+	  if ( res.code !== '0') {
+	    return uni.$u.toast('提现失败');
+	  }
+	  return res.data
+  }
 
 
   },

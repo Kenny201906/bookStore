@@ -6,9 +6,9 @@ import uView from '@/uni_modules/uview-ui'
 import divider from "@/components/common/divider.vue"
 
 // 挂载全局属性
-import message from './service/request/message.js'
+import message from '@/service/request/message.js'
 import http from './service/request/index.js'
-
+import store from '@/store/index.js'
 
 
 Vue.prototype.$message = message
@@ -22,7 +22,8 @@ Vue.component('divider', divider)
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()
 // #endif

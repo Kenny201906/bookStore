@@ -13,7 +13,7 @@
         </view>
 
         <view class="d-flex j-sb a-center">
-          <text class="font-weight money">2120</text>
+          <text class="font-weight money">{{balance.toFixed(2)}}</text>
           <view class="set-wallet" @click="waitting">完善钱包</view>
         </view>
       </view>
@@ -23,7 +23,7 @@
       <view class="p-2 recharge">
         <view>
           <view class="font-md font-weight">钱包充值</view>
-          <view class="toRecharge" @click="waitting">去充值 ></view>
+          <view class="toRecharge" @click="recharge">去充值 ></view>
         </view>
         <image
           src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/wallet3.png"
@@ -34,7 +34,7 @@
       <view class="p-2 withdrawal">
         <view>
           <view class="font-md font-weight">钱包提现</view>
-          <view class="toWithdrawal" @click="waitting">去提现 ></view>
+          <view class="toWithdrawal" @click="withdraw">去提现 ></view>
         </view>
         <image
           src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/money.png"
@@ -64,13 +64,57 @@
         </block>
       </uni-card>
     </view>
+			<u-popup :show="rechargeShow"  mode="center">
+	            <view class="p-1">
+	                 <u--input
+					   type='number'
+	                   placeholder="请输入充值金额"
+					   v-model="rechargeValue"
+	                   border="surround"
+	                   clearable
+	                 ></u--input>
+					 <view class="d-flex mt-2">
+					 	<view class="cancleBtn mr-2" @click="cancleRecharge">
+					 		取消
+					 	</view>
+						<view class="confirmBtn" @click="confirmRecharge">
+							充值
+						</view>
+					 </view>
+	            </view>
+			     </u-popup>
+					<u-popup :show="withdrawShow"  mode="center">
+			       <view class="p-1">
+			          <u--input
+			     	   type='number'
+			            placeholder="请输入体现金额"
+			     	    v-model="withdrawValue"
+			            border="surround"
+			            clearable
+			          ></u--input>
+			     	 <view class="d-flex mt-2">
+			     	 	<view class="cancleBtn mr-2" @click="cancleWithdraw">
+			     	 		取消
+			     	 	</view>
+			     		<view class="confirmBtn" @click="confirmWithdraw">
+			     			体现
+			     		</view>
+			     	 </view>
+			     </view>
+					</u-popup>
   </view>
 </template>
 
 <script>
+import { mapActions,mapState } from 'vuex'
 export default {
   data() {
     return {
+		balance: 0,
+		rechargeShow: false,
+		withdrawShow: false,
+		withdrawValue: 0,
+		rechargeValue: 0,
       moneyDatail: [
         {
           reason: '解忧杂货铺',
@@ -99,11 +143,71 @@ export default {
       ]
     };
   },
+  async onLoad() {
+	  const id = uni.getStorageSync('userInfo').id
+  	  const res = await this.getWalletInfoAction(id);
+	  this.balance = res.wallet.balance
+  },
+ computed: {
+ },
   methods: {
+	...mapActions(['getWalletInfoAction','rechargeAction','withdrawAction']),
+	recharge(){
+		this.rechargeShow = true
+	},
+	cancleRecharge(){
+		this.rechargeShow = false
+	},
+	async confirmRecharge(){
+		if(this.rechargeValue > 100000){
+			uni.showToast({
+							title:'单次充值金额最多为10万',
+							icon: 'none'
+						})
+		 return false
+		}
+		const id = uni.getStorageSync('userInfo').id
+
+		const res = await this.rechargeAction({
+			userId: id,
+			money: this.rechargeValue
+		})
+		this.balance = res.balance
+		uni.showToast({
+			title: '充值成功'
+		})
+		this.rechargeShow = false
+	},
+	withdraw(){
+		this.withdrawShow = true
+	},
+	cancleWithdraw(){
+		this.withdrawShow = false
+	},
+	async confirmWithdraw(){
+		if(this.withdrawValue > 100000){
+			uni.showToast({
+							title:'单次体现金额最多为10万',
+							icon: 'none'
+						})
+		 return false
+		}
+		const id = uni.getStorageSync('userInfo').id
+
+		const res = await this.withdrawAction({
+			userId: id,
+			money: this.withdrawValue
+		})
+		this.balance = res.balance
+		uni.showToast({
+			title: '体现成功'
+		})
+		this.withdrawShow = false
+	},
     waitting() {
       uni.$u.toast('功能待完善');
     }
-  }
+  },
 };
 </script>
 
@@ -213,6 +317,24 @@ export default {
   }
   .wallet-operation {
     color: white;
+  }
+  .cancleBtn {
+	  width: 200rpx;
+	  height: 60rpx;
+	  line-height: 60rpx;
+	  border-radius: 30rpx;
+	  text-align: center;
+	  background-color: #f5f7fa;
+	  color: #d8dbe1;
+  }
+  .confirmBtn {
+  	  width: 200rpx;
+  	  height: 60rpx;
+  	  line-height: 60rpx;
+  	  border-radius: 30rpx;
+  	  text-align: center;
+  	  background-color: #ff8319;
+  	  color: white;
   }
 }
 </style>
