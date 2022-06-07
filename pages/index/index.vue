@@ -123,7 +123,7 @@
 					name: item.name,
 					author: item.author,
 					type: item.category,
-					salesCount: Math.floor(Math.random() * (9999 - 1000) + 1000)
+					salesCount: Math.floor(Math.random() * (99999 - 1000) + 1000)
 				}
 			})
 			goodsInfos = this.sortByField(goodsInfos, 'salesCount')
