@@ -69,6 +69,7 @@
 					})
 					return false
 				}
+				uni.setStorageSync('bookStore',this.bookStoreList[id]);
 				uni.$emit('chooseBookStore',this.bookStoreList[id].bookList);
                   uni.switchTab({
                   	url: `/pages/index/index`

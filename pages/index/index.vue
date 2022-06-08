@@ -92,9 +92,12 @@
 		},
 	 async	onLoad() {
 			let salesCount = 983630;
-		    const res = await http.get('/business/39');
-			console.log(res.data);
-			const firstList = res.data.business.bookList.map((item)=> {
+			uni.showLoading({
+				title:'加载中...'
+			})
+		    const res = await http.get('/business/list');
+			uni.setStorageSync('bookStore',res.data.records[2])
+			const firstList = res.data.records[2].bookList.map((item)=> {
 					salesCount = salesCount - 15000
 					return {
 						...item,
@@ -103,6 +106,7 @@
 					}
 				})
 		 this.goodsInfo = [firstList,firstList,firstList]
+		 uni.hideLoading();
 			uni.$on('chooseBookStore',(bookList)=>{
 	            const newList = bookList.map((item)=> {
 					salesCount = salesCount - 15000

@@ -93,6 +93,8 @@ export default {
 	},
  async onShow() {
 	 const _this = this;
+	 
+	 this.selectAll = false;
 	 uni.showLoading({
 	 	title:'加载中...'
 	 })
@@ -123,7 +125,7 @@ export default {
 			let count = 0;
 			this.goodsInfo.forEach((item)=>{
 			   if(item.state){
-				   count++;
+				   count = item.count + count;
 			   }
 			})
 			return count
