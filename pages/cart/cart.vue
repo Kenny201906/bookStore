@@ -105,7 +105,7 @@ export default {
    this.goodsInfo =  res.cart.map(item => {
 		 return {
 			 ...item.book,
-			 status: false,
+			 state: false,
 			 count: item.quantity
 		 }
 	 })
@@ -131,7 +131,7 @@ export default {
 		    let price = 0;
 			this.goodsInfo.forEach((item)=>{
 				if(item.state){
-					price = price + item.count * item.price
+					price = price + item.count * item.unitPrice 
 				}
 			})
 			return price
@@ -213,7 +213,7 @@ export default {
 				})
 			}else{
 				uni.navigateTo({
-					url: `/subpackage-cart/settlement/settlement?total=${this.total}&totalPrice=${this.totalPrice}`
+					url: `/subpackage-cart/settlement/settlement?total=${this.total}&totalPrice=${this.totalPrice.toFixed(2)}`
 				})
 			}
 		}

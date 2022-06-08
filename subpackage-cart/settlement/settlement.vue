@@ -24,7 +24,7 @@ export default {
 	onLoad(options) {
 		this.info = {
 			total: parseInt(options.total),
-			totalPrice: parseInt(options.totalPrice).toFixed(2)
+			totalPrice: options.totalPrice
 		};
 	},
 	methods: {}
