@@ -56,9 +56,6 @@
 
             <view>
               <view class="font-md font-weight" style="text-align: end;">{{ item.reducedAmount }}</view>
-              <view class="text-light-muted" style="padding-top: 5rpx;font-size: 24upx;">
-                余额 {{ item.remainingAmount }}
-              </view>
             </view>
           </view>
         </block>
@@ -87,7 +84,7 @@
 			       <view class="p-1">
 			          <u--input
 			     	   type='number'
-			            placeholder="请输入体现金额"
+			            placeholder="请输入提现金额"
 			     	    v-model="withdrawValue"
 			            border="surround"
 			            clearable
@@ -97,7 +94,7 @@
 			     	 		取消
 			     	 	</view>
 			     		<view class="confirmBtn" @click="confirmWithdraw">
-			     			体现
+			     			提现
 			     		</view>
 			     	 </view>
 			     </view>
@@ -116,30 +113,7 @@ export default {
 		withdrawValue: 0,
 		rechargeValue: 0,
       moneyDatail: [
-        {
-          reason: '解忧杂货铺',
-          time: '2022-05-01 17:53:04',
-          reducedAmount: '-58.00',
-          remainingAmount: '189.00'
-        },
-       {
-         reason: '解忧杂货铺',
-         time: '2022-05-01 17:53:04',
-         reducedAmount: '-58.00',
-         remainingAmount: '189.00'
-       },
-        {
-          reason: '解忧杂货铺',
-          time: '2022-05-01 17:53:04',
-          reducedAmount: '-58.00',
-          remainingAmount: '189.00'
-        },
-       {
-         reason: '解忧杂货铺',
-         time: '2022-05-01 17:53:04',
-         reducedAmount: '-58.00',
-         remainingAmount: '189.00'
-       },
+
       ]
     };
   },
@@ -147,6 +121,13 @@ export default {
 	  const id = uni.getStorageSync('userInfo').id
   	  const res = await this.getWalletInfoAction(id);
 	  this.balance = res.wallet.balance
+	this.moneyDatail = res.wallet.walletRecords.map(item => {
+		  return {
+			  reason: item.type === 1 ?  '充值' : item.type === 2 ? '提现' : '购买商品',
+			  time: item.operateTime,
+			  reducedAmount: item.type === 1 ? '+' + item.money : '-' + item.money
+		  }
+	  })
   },
  computed: {
  },

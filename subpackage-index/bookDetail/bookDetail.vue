@@ -12,7 +12,7 @@
 					<text class="ui-book-card__info-name">暂无</text>
 				</view>
 				<view>出版社: 新华出版社</view>
-				<view>出版时间: {{bookDetail.creatTime}}</view>
+				<view>出版时间: {{bookDetail.createTime}}</view>
 				<view>分类号: {{bookDetail.classificationNumber}}</view>
 				<view>索书号: {{bookDetail.callNumber }}</view>
 				<view>页数: {{bookDetail.pagesNumber}}</view>

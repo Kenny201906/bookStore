@@ -107,6 +107,7 @@
 				this.show = false
 			},
 			confirm(e) {
+				
 				this.show = false
 				console.log(e.value);
 				this.value2 = uni.$u.timeFormat(e.value, 'yyyy年mm月dd日')
@@ -122,6 +123,10 @@
 			confirmBorrow() {
 				if (this.value2 == '') {
 					return this.$u.toast('请选择取书日期')
+				}
+				const isLegitimate = new Date().getTime()-24*60*60*1000 < new Date(this.value).getTime() && new Date(this.value).getTime() < new Date(this.lastestDate).getTime(); 
+				if(!isLegitimate){
+					return this.$u.toast('借阅时间不合法')
 				}
 
 				// 发请求

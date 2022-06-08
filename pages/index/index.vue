@@ -44,7 +44,7 @@
 										<view :class="['imgBadge','imgBadge' + index2]">No.{{index2 + 1}}</view>
 									</template>
 
-									<image :src="item2.src" mode="widthFix" style="width: 150rpx;"></image>
+									<image :src="item2.cover" mode="widthFix" style="width: 150rpx;"></image>
 								</view>
 
 
@@ -53,7 +53,7 @@
 										{{item2.name}}
 									</view>
 									<view class="text-light-muted uni-text-small">
-										{{item2.author}}·{{item2.type}}
+										{{item2.author}}·{{item2.category}}
 									</view>
 								</view>
 								<view style="width: 7em;color: #cd9157;text-align: end;">
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+	import http from '@/service/request/index.js';
 	const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
 	let qqmapsdk;
 	export default {
@@ -89,8 +90,30 @@
 				goodsInfo: [1, 2, 3],
 			};
 		},
-		onLoad() {
-
+	 async	onLoad() {
+			let salesCount = 983630;
+		    const res = await http.get('/business/39');
+			console.log(res.data);
+			const firstList = res.data.business.bookList.map((item)=> {
+					salesCount = salesCount - 15000
+					return {
+						...item,
+						type: item.category,
+						salesCount: salesCount
+					}
+				})
+		 this.goodsInfo = [firstList,firstList,firstList]
+			uni.$on('chooseBookStore',(bookList)=>{
+	            const newList = bookList.map((item)=> {
+					salesCount = salesCount - 15000
+					return {
+						...item,
+						type: item.category,
+						salesCount: salesCount
+					}
+				})
+			    this.goodsInfo = [newList,newList,newList]
+			})
 			const _this = this;
 			qqmapsdk = new QQMapWX({
 				key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
@@ -115,25 +138,8 @@
 					})
 				}
 			});
-			let goodsInfoLength = this.cate.length
-			let goodsInfos = uni.getStorageSync('bookStore').bookList.map(item => {
-				return {
-					...item,
-					src: item.cover,
-					name: item.name,
-					author: item.author,
-					type: item.category,
-					salesCount: Math.floor(Math.random() * (99999 - 1000) + 1000)
-				}
-			})
-			goodsInfos = this.sortByField(goodsInfos, 'salesCount')
-			this.goodsInfo[0] = goodsInfos
-			this.goodsInfo[1] = goodsInfos
-			this.goodsInfo[2] = goodsInfos
-			console.log(goodsInfos);
 		},
 		onShow() {
-
 
 		},
 		methods: {

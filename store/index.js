@@ -23,7 +23,8 @@ import {
 
 import {
 	addCart,
-	getCart
+	getCart,
+	deleteCart
 } from '../service/cart/cart.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -93,7 +94,12 @@ const store = new Vuex.Store({
 	  }
 	  return res.data
   },
-
+  async deleteCartAction({commit},payload){
+	  const res = await deleteCart(payload);
+	  if(res.code !== '0'){
+		  return uni.$u.toast('删除失败')
+	  }
+  }
   },
 
 

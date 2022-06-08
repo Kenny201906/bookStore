@@ -2,7 +2,7 @@
 	<view class="p-2">
 		<view class="d-flex a-center">
 			<u-input
-			  placeholder="请输入内容"
+			  placeholder="请输入书店名称"
 			  border="surround"
 						shape="circle"
 			  v-model="value"
@@ -12,7 +12,7 @@
 				<u-icon name="search" color="#808080" size="20"></u-icon>
 			</template>
 			</u-input>
-			<view class="ml-1 searchBtn">
+			<view class="ml-1 searchBtn" @click="search">
 				搜索
 			</view>
 		</view>
@@ -51,6 +51,11 @@
 		methods: {
 		itemClick(index){
 			this.value = this.historyList[index] 
+		},
+		search(){
+			uni.navigateTo({
+				url: `/subpackage-index/bookStore-list/bookStore-list?value=${this.value}`
+			})
 		}
 		}
 	}

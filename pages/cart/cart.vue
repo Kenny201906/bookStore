@@ -91,7 +91,7 @@ export default {
 			selectAll: false,
 		};
 	},
- async onLoad() {
+ async onShow() {
 	 const _this = this;
 	 uni.showLoading({
 	 	title:'加载中...'
@@ -102,9 +102,10 @@ export default {
 		 pageNum: 1,
 		 pageSize: 99
 	 });
-   this.goodsInfo =  res.cart.map(item => {
+   this.goodsInfo =  res.records.map(item => {
 		 return {
 			 ...item.book,
+			 cartId: item.id,
 			 state: false,
 			 count: item.quantity
 		 }
@@ -138,7 +139,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['getCartAction']),
+		...mapActions(['getCartAction','deleteCartAction']),
 		decrease(index){
 			const count = this.goodsInfo[index].count
 			if(count <= 1){
@@ -195,12 +196,19 @@ export default {
 			this.isEdit = !this.isEdit
 		},
 		deleteGoods(){
+			const _this = this;
 			uni.showModal({
 				title: '提示',
 				content: '您是否要删除选中的商品？',
 				success: function (res) {
 					if (res.confirm) {
-						console.log('用户点击确定');
+						const ids = []
+						_this.goodsInfo.forEach(item => {
+							if(item.state){
+						     ids.push(item.cartId)
+							}
+						})
+						_this.deleteCartAction(ids)
 					}
 				}
 			});

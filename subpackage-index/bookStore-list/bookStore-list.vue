@@ -5,7 +5,10 @@
 		</view>
 		<block v-for="(item,index) in bookStoreList" :key="index">
 			<view class="mt-2 d-flex a-center card p-2" @click="chooseBookStore(index)">
-				<image :src="item.src" mode="widthFix" style="width: 200rpx;border-radius: 20rpx;"></image>
+				<view  style="width:200rpx;border-radius:20rpx;">
+			<image :src="item.src" style="width:200rpx;border-radius:20rpx;" mode="widthFix"></image>
+				</view>
+
 				<view class="ml-2">
 					<view class="font-md font-weight">
 						{{item.name}}
@@ -31,31 +34,46 @@
 			}
 		},
 		onShow() {
+
 			this.getBookStore()
+
 		},
-		methods: {
+		methods: {			
 			// 获取书店列表
 			async getBookStore() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				let distance = 8;
 				const res = await this.$http.get('/business/list')
 				this.bookStoreList = res.data.records.map(item => {
+					distance ++ 
 					return {
 						id:item.id,
-						src: 'https://tse1-mm.cn.bing.net/th/id/OIP-C.ABIxsqLL4RL3KP9Q1-XAowHaE7?w=227&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7',
+						src: item.logo,
 						name: item.name,
 						userId:item.userId,
 						bookList:item.bookList,
 						address: item.address,
-						distance: 999
+						distance: distance
 					}
 				})
-				console.log(res);
+		        uni.hideLoading();
 			},
 			chooseBookStore(id) {
 				// 保存店铺信息
-				uni.setStorageSync('bookStore', this.bookStoreList[id])
-				uni.navigateBack({
-
-				})
+				if(this.bookStoreList[id].bookList.length <= 0 ) {
+					uni.showToast({
+						title:'店铺暂无书籍',
+						icon: 'none'
+					})
+					return false
+				}
+				uni.$emit('chooseBookStore',this.bookStoreList[id].bookList);
+                  uni.switchTab({
+                  	url: `/pages/index/index`
+                  })
+				  
 			}
 		}
 
