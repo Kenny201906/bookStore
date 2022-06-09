@@ -91,64 +91,72 @@
 			};
 		},
 	 async	onLoad() {
-			let salesCount = 983630;
-			uni.showLoading({
-				title:'加载中...'
-			})
-		    const res = await http.get('/business/list')
-			uni.setStorageSync('bookStore',res.data.records[2])
-			const firstList = res.data.records[2].bookList.map((item)=> {
-					salesCount = salesCount - 15000
-					return {
-						...item,
-						type: item.category,
-						salesCount: salesCount
-					}
-				})
-		 this.goodsInfo = [firstList,firstList,firstList]
-		 uni.hideLoading();
-			uni.$on('chooseBookStore',(bookList)=>{
-	            const newList = bookList.map((item)=> {
-					salesCount = salesCount - 15000
-					return {
-						...item,
-						type: item.category,
-						salesCount: salesCount
-					}
-				})
-			    this.goodsInfo = [newList,newList,newList]
-			})
-			const _this = this;
-			qqmapsdk = new QQMapWX({
-				key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
-			});
-			uni.getLocation({
-				type: 'gcj02',
-				success: function(res) {
-					qqmapsdk.reverseGeocoder({
-						location: {
-							latitude: res.latitude,
-							longitude: res.longitude
-						},
-						success: function(res2) {
-							_this.location = res2.result.formatted_addresses.recommend;
-						},
-					});
-				},
-				fail: () => {
-					uni.showToast({
-						title: '获取定位失败,请打开手机定位',
-						icon: 'none'
-					})
-				}
-			});
+			
 		},
-		onShow() {
+	 async	onShow() {
 	     if(uni.getStorageSync('token') === ''){
 			 uni.navigateTo({
 			 	url: '/subpackage-my/login/login'
 			 })
+			 return false
 		 }
+		 
+	let salesCount = 983630;
+		 if(uni.getStorageSync('first') === ''){
+	
+			 			uni.showLoading({
+			 				title:'加载中...'
+			 			})
+			    const res = await http.get('/business/list')
+			 			uni.setStorageSync('bookStore',res.data.records[2])
+			 			const firstList = res.data.records[2].bookList.map((item)=> {
+			 					salesCount = salesCount - 15000
+			 					return {
+			 						...item,
+			 						type: item.category,
+			 						salesCount: salesCount
+			 					}
+			 				})
+			 this.goodsInfo = [firstList,firstList,firstList]
+			 uni.hideLoading();
+			 uni.setStorageSync('first','first')
+		 }
+		
+		 			uni.$on('chooseBookStore',(bookList)=>{
+		        const newList = bookList.map((item)=> {
+		 					salesCount = salesCount - 15000
+		 					return {
+		 						...item,
+		 						type: item.category,
+		 						salesCount: salesCount
+		 					}
+		 				})
+		 			    this.goodsInfo = [newList,newList,newList]
+		 			})
+		 			const _this = this;
+		 			qqmapsdk = new QQMapWX({
+		 				key: 'LZYBZ-XI2L4-7I7UB-XXZKJ-QJEEH-VNBEH'
+		 			});
+		 			uni.getLocation({
+		 				type: 'gcj02',
+		 				success: function(res) {
+		 					qqmapsdk.reverseGeocoder({
+		 						location: {
+		 							latitude: res.latitude,
+		 							longitude: res.longitude
+		 						},
+		 						success: function(res2) {
+		 							_this.location = res2.result.formatted_addresses.recommend;
+		 						},
+		 					});
+		 				},
+		 				fail: () => {
+		 					uni.showToast({
+		 						title: '获取定位失败,请打开手机定位',
+		 						icon: 'none'
+		 					})
+		 				}
+		 			});
 		},
 		methods: {
 			sortByField(arr, field) {

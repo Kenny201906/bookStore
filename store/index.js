@@ -112,8 +112,8 @@ const store = new Vuex.Store({
   async addCartAction({commit},payload){
 	  const res = await addCart(payload)
 	  if ( res.code !== '0') {
-	    return uni.$u.toast('添加购物车失败');
-	  }
+	    return uni.$u.toast(res.msg);
+	  } 
 	  return res.data
   },
   async getCartAction({commit},payload){
@@ -133,8 +133,9 @@ const store = new Vuex.Store({
   async settlementCartAction({commit},payload){
 	  const res = await settlementCart(payload);
 	  if(res.code !== '0'){
-		  return uni.$u.toast('结算失败')
+		  return uni.$u.toast(res.msg)
 	  }
+	  return res
   }
   },
 

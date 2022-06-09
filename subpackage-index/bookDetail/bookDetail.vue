@@ -173,9 +173,6 @@
 						id: this.bookId
 					}
 				})
-				uni.showToast({
-					title: '加入购物车成功'
-				});
 			},
 			right() {
 				console.log('right');

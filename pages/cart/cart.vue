@@ -96,6 +96,7 @@ export default {
 	 	 uni.navigateTo({
 	 	 	url: '/subpackage-my/login/login'
 	 	 })
+		 return false
 	  }
 	 const _this = this;
 	 
@@ -269,11 +270,16 @@ export default {
 			  	  		})
 			  	  		}
 			  	  	})
-			  	  await	_this.settlementCartAction({
+			  	 const res = await	_this.settlementCartAction({
 			  	  		cartList: cartList,
 			  	  		price: _this.totalPrice.toFixed(2),
 			  	  		userId: uni.getStorageSync('userInfo').id
 			  	  	})
+					if(res.code === '0'){
+						uni.showToast({
+							title: '结算成功'
+						});
+					}
 					uni.showLoading({
 						 	title:'加载中...'
 						 })
@@ -295,9 +301,7 @@ export default {
 							 }
 						 })
 						 uni.hideLoading()
-					uni.showToast({
-						title: '结算成功'
-					});
+				
 			  	  }
 			  	}
 			  });
