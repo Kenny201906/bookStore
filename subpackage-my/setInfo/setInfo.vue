@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="list-cell">
 			<image class="user-images"
-				src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/bookStore/%E5%A4%B4%E5%83%8F%20%E7%94%B7%E5%AD%A9.png"
+				:src="userInfo.avatar"
 				style="width: 100rpx;height: 100rpx; border-radius: 50%;"></image>
 			<view class="user-name">
 				<span>{{userInfo.nickName}}</span>
@@ -31,8 +31,7 @@
 	export default {
 		data() {
 			return {
-				userId: uni.getStorageSync('userInfo').id,
-				
+				userId: uni.getStorageSync('userInfo').id,	
 				userInfo: uni.getStorageSync('userInfo')
 			};
 		},

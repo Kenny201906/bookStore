@@ -92,6 +92,11 @@ export default {
 		};
 	},
  async onShow() {
+	  if(uni.getStorageSync('token') === ''){
+	 	 uni.navigateTo({
+	 	 	url: '/subpackage-my/login/login'
+	 	 })
+	  }
 	 const _this = this;
 	 
 	 this.selectAll = false;

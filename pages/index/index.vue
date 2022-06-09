@@ -144,7 +144,11 @@
 			});
 		},
 		onShow() {
-
+	     if(uni.getStorageSync('token') === ''){
+			 uni.navigateTo({
+			 	url: '/subpackage-my/login/login'
+			 })
+		 }
 		},
 		methods: {
 			sortByField(arr, field) {

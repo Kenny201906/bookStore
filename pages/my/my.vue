@@ -128,6 +128,13 @@
 		onLoad() {
 			this.token = uni.getStorageSync('token');
 		},
+		onShow() {
+		 if(uni.getStorageSync('token') === ''){
+			 uni.navigateTo({
+			 	url: '/subpackage-my/login/login'
+			 })
+		 }
+		},
 		async onShow() {
 			this.token = uni.getStorageSync('token');
 			// const res = await this.hasMessageAction(parseInt(uni.getStorageSync('userInfo').id));
