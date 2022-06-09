@@ -95,7 +95,7 @@
 			uni.showLoading({
 				title:'加载中...'
 			})
-		    const res = await http.get('/business/list');
+		    const res = await http.get('/business/list')
 			uni.setStorageSync('bookStore',res.data.records[2])
 			const firstList = res.data.records[2].bookList.map((item)=> {
 					salesCount = salesCount - 15000
