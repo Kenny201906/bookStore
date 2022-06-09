@@ -21,7 +21,8 @@ var http = {
 				},
 				data: params,
 				success: (res) => {
-					if (res.statusCode == 200 && res.data.code == 200) {
+					console.log(res);
+					if (res.code == 0) {
 						let data = res.data
 						if (data.hasOwnProperty("token")) {
 							let token = data.token
@@ -29,14 +30,14 @@ var http = {
 							uni.setStorageSync("token", token)
 						}
 						console.log('request:POST请求' + config.baseUrl + path + ' 成功', res.data)
-						resolve(res.data)
-					} else if (res.statusCode == 401) {
+
+					} else if (res.code == 401) {
 						uni.$u.route({
 							url: '/subpackage-my/login/login',
 							type: 'reLaunch'
 						})
 					}
-
+					resolve(res.data)
 
 				},
 				fail: (err) => {
@@ -63,7 +64,7 @@ var http = {
 				},
 				data: params,
 				success: (res) => {
-					if (res.statusCode == 200 && res.data.code == 200) {
+					if (res.code == 0) {
 						let data = res.data
 						if (data.hasOwnProperty("token")) {
 							let token = data.token
@@ -71,14 +72,14 @@ var http = {
 							uni.setStorageSync("token", token)
 						}
 						console.log('request:PUT请求' + config.baseUrl + path + ' 成功', res.data)
-						resolve(res.data)
-					} else if (res.statusCode == 401) {
+
+					} else if (res.code == 401) {
 						uni.$u.route({
 							url: '/subpackage-my/login/login',
 							type: 'reLaunch'
 						})
 					}
-
+					resolve(res.data)
 				},
 				fail: (err) => {
 					message.toast('请求失败', 'err')
@@ -103,7 +104,7 @@ var http = {
 					token: uni.getStorageSync("token")
 				},
 				success: (res) => {
-					if (res.statusCode == 200 && res.data.code == 200) {
+					if (res.code == 0) {
 						let data = res.data
 						if (data.hasOwnProperty("token")) {
 							let token = data.token
@@ -112,14 +113,14 @@ var http = {
 						}
 						console.log('request:GET请求' + config.baseUrl + path + ' 成功', res
 							.data)
-						resolve(res.data)
-					} else if (res.statusCode == 401) {
+
+					} else if (res.code == 401) {
 						uni.$u.route({
 							url: '/subpackage-my/login/login',
 							type: 'reLaunch'
 						})
 					}
-
+					resolve(res.data)
 				},
 				fail: (err) => {
 					message.toast('请求失败', 'err')
@@ -145,7 +146,7 @@ var http = {
 					token: uni.getStorageSync("token")
 				},
 				success: (res) => {
-					if (res.statusCode == 200 && res.data.code == 200) {
+					if (res.code == 0) {
 						let data = res.data
 						if (data.hasOwnProperty("token")) {
 							let token = data.token
