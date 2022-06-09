@@ -30,6 +30,7 @@
 	export default {
 		data() {
 			return {
+				keywords:　'',
 				bookStoreList: []
 			}
 		},
@@ -38,6 +39,13 @@
 			this.getBookStore()
 
 		},
+　　　  onLoad(options) {
+	if(options.value)
+	{
+			    this.keywords = options.value
+	}
+
+},
 		methods: {			
 			// 获取书店列表
 			async getBookStore() {
@@ -45,7 +53,9 @@
 					title: '加载中...'
 				})
 				let distance = 8;
-				const res = await this.$http.get('/business/list')
+				const res = await this.$http.get('/business/list',{
+					search: this.keywords
+				})
 				this.bookStoreList = res.data.records.map(item => {
 					distance ++ 
 					return {

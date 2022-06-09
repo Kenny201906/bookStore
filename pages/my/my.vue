@@ -23,7 +23,7 @@
 		<view class="navB">
 			<text class="font-weight ml-3 ">我的订单</text>
 			<view class="nav row a-center mt-2">
-				<view class="navItem span-5" @click="goToOrder">
+				<view class="navItem span-5" @click="goToOrder(0)">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E5%85%A8%E9%83%A8%E8%AE%A2%E5%8D%95.png"
@@ -31,7 +31,7 @@
 					</p>
 					<p>全部</p>
 				</view>
-				<view class="navItem span-5" @click="goToOrder">
+				<view class="navItem span-5" @click="goToOrder(1)">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E9%A2%84%E7%BA%A6%E8%AE%A2%E5%8D%95.png"
@@ -39,7 +39,7 @@
 					</p>
 					<p>借阅中</p>
 				</view>
-				<view class="navItem span-5" @click="goToOrder">
+				<view class="navItem span-5" @click="goToOrder(2)">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E8%BF%9B%E8%A1%8C%E4%B8%AD%E8%AE%A2%E5%8D%95.png"
@@ -47,7 +47,7 @@
 					</p>
 					<p>已归还</p>
 				</view>
-				<view class="navItem span-5" @click="goToOrder">
+				<view class="navItem span-5" @click="goToOrder(3)">
 					<p>
 						<image
 							src="https://oss-augustrush.oss-cn-shenzhen.aliyuncs.com/yayiImage/img/%E5%B7%B2%E5%AE%8C%E6%88%90-%E8%AE%A2%E5%8D%95.png"
@@ -148,8 +148,8 @@
 			goAttestation() {
 				uni.$u.route('/subpackage-home/entry-attestation/entry-attestation');
 			},
-			goToOrder() {
-				uni.$u.route('/subpackage-my/order/order');
+			goToOrder(id) {
+				uni.$u.route(`/subpackage-my/order/order?id=${id}`);
 			},
 			// 登录
 			gotoLogin() {

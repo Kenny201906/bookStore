@@ -5,18 +5,18 @@
 				<text class="ui-label">图书信息</text>
 			</view>
 			<view class="ui-panel d-flex">
-				<image class="ui-book-card__img" style="margin-left: -30rpx;"
-					src="https://img.welan.com/s/2767/10822767/10822767.jpg" mode="widthFix"></image>
+				<image class="ui-book-card__img mx-1" style="margin-left: -30rpx;"
+					:src="bookData.cover" mode="widthFix" ></image>
 				<view class="infoContent mt-2 font-gray-26">
-					<view class="bookTitle">火种-寻求中的复兴之路</view>
+					<view class="bookTitle">{{bookData.name}}</view>
 
-					<view>评分：<span class="color-yellow">8.8</span></view>
+					<view>评分：<span class="color-yellow">{{bookData.score}}</span></view>
 					<view>作者:
-						<text class="ui-book-card__info-name">刘统</text>
+						<text class="ui-book-card__info-name">{{bookData.author}} </text>
 					</view>
-					<view>出版社: 新华出版社</view>
-					<view>出版时间: 2000-09-15</view>
-					<view>ISBN: 97835108561644</view>
+					<view>出版社: {{bookData.press}}</view>
+					<view>出版时间: {{bookData.createTime}}</view>
+					<view>ISBN:  {{bookData.isbn}}</view>
 				</view>
 			</view>
 		</view>
@@ -41,11 +41,14 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		data() {
 			return {
 				// 订单最晚取书日期：一个月后
+				bookData: {},
 				lastestDate: '',
+				bookId: '',
 				show: false,
 				value: new Date().getTime(),
 				value2: ''
@@ -54,7 +57,14 @@
 		onShow() {
 			this.lastestDate = this.formatDate(this.dateAdd('M', 1, new Date()))
 		},
+		
+	    onLoad(options) {
+		    this.bookId = parseInt(options.bookId)
+			this.bookData = JSON.parse(options.bookData)
+			console.log(this.bookData );
+	    },
 		methods: {
+			...mapActions(['borrowOrderAction']),
 			dateAdd(interval, number, date) {
 				switch (interval) {
 					case 'y': {
@@ -110,7 +120,7 @@
 				
 				this.show = false
 				console.log(e.value);
-				this.value2 = uni.$u.timeFormat(e.value, 'yyyy年mm月dd日')
+				this.value2 = uni.$u.timeFormat(e.value, 'yyyy-mm-dd hh:MM:ss')
 				console.log(this.value);
 
 			},
@@ -128,7 +138,15 @@
 				if(!isLegitimate){
 					return this.$u.toast('借阅时间不合法')
 				}
-
+               this.borrowOrderAction({
+				   bookId: this.bookId,
+				   userId: uni.getStorageSync('userInfo').id,
+				   businessId: uni.getStorageSync('bookStore').id,
+				   unitPrice: this.bookData.unitPrice,
+				   count: 1,
+				   type: 0,
+				   borrowTime: this.value2
+			   })
 				// 发请求
 				uni.navigateTo({
 					url: '/subpackage-index/result/result'

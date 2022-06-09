@@ -94,6 +94,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import http from '@/service/request/index.js';
 	export default {
 		data() {
 			return {
@@ -130,8 +131,12 @@
 			this.bookId = option.id
 		},
 		async onShow() {
-			const res = await this.$http.get('/book/' + this.bookId)
+			const res = await http.post('/book/getById',{
+				bookId: this.bookId,
+				businessId: uni.getStorageSync('bookStore').id
+			})
 			this.bookDetail = res.data
+		     console.log(res.data);
 			let goodsInfos = uni.getStorageSync('bookStore').bookList.map(item => {
 				return {
 					...item,
@@ -191,8 +196,11 @@
 			},
 			borrowBook() {
 				console.log(1111);
+				const bookData = JSON.stringify(this.bookDetail)
 				uni.navigateTo({
-					url: '/subpackage-index/confirmBorrow/confirmBorrow'
+					url: `/subpackage-index/confirmBorrow/confirmBorrow?bookData=${
+						bookData
+					}&bookId=${this.bookId}`
 				})
 			}
 		}

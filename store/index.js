@@ -22,7 +22,9 @@ import {
 } from '../service/wallet/wallet.js'
 
 import {
-	getOrder
+	getOrder,
+	borrowOrder,
+	backBook
 } from '../service/order/order.js'
 import {
 	addCart,
@@ -88,6 +90,21 @@ const store = new Vuex.Store({
 	  const res = await getOrder(payload);
 	  if ( res.code !== '0') {
 	    return uni.$u.toast('获取订单失败');
+	  }
+	  return res.data
+  },
+  async borrowOrderAction({commit},payload){
+	  const res = await borrowOrder(payload);
+	  if ( res.code !== '0') {
+	    return uni.$u.toast('借阅失败');
+	  }
+	  return res.data
+  },
+  
+  async backBookAction({commit},payload){
+	  const res = await backBook(payload)
+	  if ( res.code !== '0') {
+	    return uni.$u.toast('归还失败');
 	  }
 	  return res.data
   },

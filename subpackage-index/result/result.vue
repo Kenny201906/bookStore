@@ -13,7 +13,7 @@
 			</view>
 			<view class="weui-msg__opr-area">
 				<view class="weui-btn-area">
-					<button class="weui-btn" type="primary" @click="onBack">确定</button>
+
 					<button class="weui-btn" type="default" @click="goIndex">回到主页</button>
 				</view>
 			</view>
@@ -29,11 +29,6 @@
 			}
 		},
 		methods: {
-			onBack() {
-				uni.redirectTo({
-					url: '/subpackage-index/bookDetail/bookDetail'
-				})
-			},
 			goIndex() {
 				uni.switchTab({
 					url: '/pages/index/index'

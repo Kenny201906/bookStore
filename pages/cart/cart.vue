@@ -205,7 +205,7 @@ export default {
 			uni.showModal({
 				title: '提示',
 				content: '您是否要删除选中的商品？',
-				success: function (res) {
+				success: async function (res) {
 					if (res.confirm) {
 						const ids = []
 						_this.goodsInfo.forEach(item => {
@@ -213,7 +213,28 @@ export default {
 						     ids.push(item.cartId)
 							}
 						})
-						_this.deleteCartAction(ids)
+					 await	_this.deleteCartAction(ids)
+						uni.showLoading({
+							 	title:'加载中...'
+							 })
+							 const userId = uni.getStorageSync('userInfo').id;
+						
+							 const res2 = await _this.getCartAction({
+								 userId: userId,
+								 pageNum: 1,
+								 pageSize: 99
+							 });
+					
+						_this.goodsInfo =  res2.records.map(item => {
+								 return {
+									 ...item.book,
+									 cartId: item.id,
+									 businessId: item.businessId,
+									 state: false,
+									 count: item.quantity
+								 }
+							 })
+							 uni.hideLoading()
 					}
 				}
 			});
@@ -229,7 +250,7 @@ export default {
 			  uni.showModal({
 			  	title: '提示',
 			  	content: '您是否要结算物品？',
-			  	success: function (res) {
+			  	success: async function (res) {
 			  	  if (res.confirm) {
 			  	  	const cartList = [];
 			  	  	_this.goodsInfo.forEach(item => {
@@ -243,11 +264,32 @@ export default {
 			  	  		})
 			  	  		}
 			  	  	})
-			  	  	_this.settlementCartAction({
+			  	  await	_this.settlementCartAction({
 			  	  		cartList: cartList,
 			  	  		price: _this.totalPrice.toFixed(2),
 			  	  		userId: uni.getStorageSync('userInfo').id
 			  	  	})
+					uni.showLoading({
+						 	title:'加载中...'
+						 })
+						 const userId = uni.getStorageSync('userInfo').id;
+					
+						 const res2 = await _this.getCartAction({
+							 userId: userId,
+							 pageNum: 1,
+							 pageSize: 99
+						 });
+										
+					_this.goodsInfo =  res2.records.map(item => {
+							 return {
+								 ...item.book,
+								 cartId: item.id,
+								 businessId: item.businessId,
+								 state: false,
+								 count: item.quantity
+							 }
+						 })
+						 uni.hideLoading()
 					uni.showToast({
 						title: '结算成功'
 					});
