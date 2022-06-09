@@ -104,10 +104,12 @@ export default {
 		 pageNum: 1,
 		 pageSize: 99
 	 });
+	 console.log(res);
    this.goodsInfo =  res.records.map(item => {
 		 return {
 			 ...item.book,
 			 cartId: item.id,
+			 businessId: item.business.id,
 			 state: false,
 			 count: item.quantity
 		 }
@@ -141,7 +143,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['getCartAction','deleteCartAction']),
+		...mapActions(['getCartAction','deleteCartAction','settlementCartAction']),
 		decrease(index){
 			const count = this.goodsInfo[index].count
 			if(count <= 1){
@@ -215,16 +217,42 @@ export default {
 				}
 			});
 		},
-		buy(){
+	async buy(){
 			if(this.total <=0 ){
 				uni.showToast({
 					title: '请至少选择一件商品',
 					icon: 'none'
 				})
 			}else{
-				uni.navigateTo({
-					url: `/subpackage-cart/settlement/settlement?total=${this.total}&totalPrice=${this.totalPrice.toFixed(2)}`
-				})
+			const _this = this;
+			  uni.showModal({
+			  	title: '提示',
+			  	content: '您是否要结算物品？',
+			  	success: function (res) {
+			  	  if (res.confirm) {
+			  	  	const cartList = [];
+			  	  	_this.goodsInfo.forEach(item => {
+			  	  		if(item.state){
+			  	  	    cartList.push({
+			  	  			id: item.cartId,
+			  	  			bookId: item.id,
+			  	  			userId: uni.getStorageSync('userInfo').id,
+			  	  			quantity: item.count,
+			  	  	        businessId: item.businessId
+			  	  		})
+			  	  		}
+			  	  	})
+			  	  	_this.settlementCartAction({
+			  	  		cartList: cartList,
+			  	  		price: _this.totalPrice.toFixed(2),
+			  	  		userId: uni.getStorageSync('userInfo').id
+			  	  	})
+			  	  }
+			  	}
+			  });
+				// uni.navigateTo({
+				// 	url: `/subpackage-cart/settlement/settlement?total=${this.total}&totalPrice=${this.totalPrice.toFixed(2)}`
+				// })
 			}
 		}
 	}

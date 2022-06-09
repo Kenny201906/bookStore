@@ -24,7 +24,8 @@ import {
 import {
 	addCart,
 	getCart,
-	deleteCart
+	deleteCart,
+	settlementCart
 } from '../service/cart/cart.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -98,6 +99,13 @@ const store = new Vuex.Store({
 	  const res = await deleteCart(payload);
 	  if(res.code !== '0'){
 		  return uni.$u.toast('删除失败')
+	  }
+  },
+  
+  async settlementCartAction({commit},payload){
+	  const res = await settlementCart(payload);
+	  if(res.code !== '0'){
+		  return uni.$u.toast('结算失败')
 	  }
   }
   },
