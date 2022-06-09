@@ -130,7 +130,7 @@
 			showPicker() {
 				this.show = true
 			},
-			confirmBorrow() {
+		 async  confirmBorrow() {
 				if (this.value2 == '') {
 					return this.$u.toast('请选择取书日期')
 				}
@@ -138,7 +138,7 @@
 				if(!isLegitimate){
 					return this.$u.toast('借阅时间不合法')
 				}
-               this.borrowOrderAction({
+              await this.borrowOrderAction({
 				   bookId: this.bookId,
 				   userId: uni.getStorageSync('userInfo').id,
 				   businessId: uni.getStorageSync('bookStore').id,
