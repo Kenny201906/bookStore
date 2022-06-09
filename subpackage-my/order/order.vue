@@ -1,137 +1,94 @@
 <template>
 	<view>
-		<u-empty v-if="applyList.length == 0" mode="order" icon="http://cdn.uviewui.com/uview/empty/order.png"
+		<u-empty v-if="orderList.length == 0" mode="order" icon="http://cdn.uviewui.com/uview/empty/order.png"
 			text="您还没有相关订单" marginTop="150"></u-empty>
 		<view class="card-wrap">
-			<block v-for="(item, index) in applyList" :key="index">
-				<view class="card-box" v-if="item.status == 0">
-					<view class="card-info" style="border-left: 4px solid #5f9ffb;"
-						@click="handleApplyDetail(item.id,0)">
-						<view class="content-header d-flex j-sb mt-2 mx-2">
-							<view class="" style="color: #999;">{{ item.createAt }}</view>
-							<view class="applyIng" style="color: #5ea0ff;">申请中</view>
-						</view>
-						<view class="content-body d-flex j-sb mt-1 mx-2">
-							<view class="clinic">{{ item.clinic }}</view>
-							<view class="" style="color: #999999;">申请人：{{ item.userName }}</view>
-						</view>
+		<block v-for="(order,index) in orderList" :key="index">
+	        <uni-card>
+				<view class="d-flex j-sb py-1 border-bottom">
+					<view class="">
+						订单状态:
+					</view>
+					<view class="">
+						<u-tag text="支付成功" type="success" plain></u-tag>
 					</view>
 				</view>
-				<view class="card-box" v-if="item.status == 1">
-					<view class="card-info" style="border-left: 4px solid #f99901;"
-						@click="handleApplyDetail(item.id,1)">
-						<view class="content-header d-flex j-sb mt-2 mx-2">
-							<view class="" style="color: #999;">{{ item.createAt }}</view>
-
-							<view class="applyReject" style="color: #5ea0ff;">被驳回</view>
-						</view>
-						<view class="content-body d-flex j-sb mt-1 mx-2">
-							<view class="clinic">{{ item.clinic }}</view>
-							<view class="" style="color: #999999;">申请人：{{ item.userName }}</view>
-						</view>
+				<view class="d-flex j-sb py-1 border-bottom">
+					<view class="">
+						书名:
+					</view>
+					<view class="">
+						{{order.bookname}}
 					</view>
 				</view>
-				<view class="card-box" v-if="item.status == 2">
-					<view class="card-info" style="border-left: 4px solid #63be4f;"
-						@click="handleApplyDetail(item.id,2)">
-						<view class="content-header d-flex j-sb mt-2 mx-2">
-							<view class="" style="color: #999;">{{ item.createAt }}</view>
-							<view class="applyComplete" style="color: #5ea0ff;">申请通过</view>
-						</view>
-						<view class="content-body d-flex j-sb mt-1 mx-2">
-							<view class="clinic">{{ item.clinic }}</view>
-							<view class="" style="color: #999999;">申请人：{{ item.userName }}</view>
-						</view>
+				<view class="d-flex j-sb py-1 border-bottom">
+					<view class="">
+						订单号:
+					</view>
+					<view class="">
+						{{order.orderNum}}
 					</view>
 				</view>
-			</block>
+				<view class="d-flex j-sb py-1 border-bottom">
+					<view class="">
+						支付时间:
+					</view>
+					<view class="">
+						{{order.createTime}}
+					</view>
+				</view>
+				<view class="d-flex j-sb py-1">
+					<view class="">
+						金额:
+					</view>
+					<view class="">
+						{{order.money}}
+					</view>
+				</view>
+			</uni-card>
+		</block>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		data() {
 			return {
-				applyList: [],
-
-				pageInfo: {
-					pageNum: 1,
-					pageSize: 5,
-					userId: uni.getStorageSync('userInfo').id,
-					status: 0,
-				}
+                    orderList: [],
+					pageInfo: {
+						pageSize: 10,
+						pageNum: 1,
+					}
 			};
 		},
-		onLoad(option) {
-			this.pageInfo.status = option.status
+		async onLoad() {
+			uni.showLoading({
+				title:'加载中...'
+			})
+		   const res = 	await this.getOrderAction({
+					...this.pageInfo,
+					userId: uni.getStorageSync('userInfo').id
+				})
+			this.orderList = res.records.map(item => {
+					return {
+						bookname: item.orderDetails.book.name,
+						orderNum: item.orderNo,
+						createTime: item.createTime,
+						money: item.payPrice
+					}
+				})
+				uni.hideLoading()
 		},
 		onShow() {
-			this.getApplyData()
 		},
 		methods: {
-			handleApplyDetail(id, status) {
-				uni.$u.route('/subpackage-home/applyDetail/applyDetail', {
-					id: id,
-					status: status
-				});
-			},
-			// 获取申请数据
-			async getApplyData() {
-				const {
-					data: res
-				} = await this.$http.post('/order/myorder', {...this.pageInfo})
-				this.applyList = res.list
-			}
+			...mapActions(['getOrderAction'])
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
-	.card-box {
-		width: 100%;
-		height: 160rpx;
 
-		.card-info {
-			margin: auto;
-			width: 92%;
-			height: 130rpx;
-			background: #ffffff;
-			box-shadow: 0 4px 8px 0 rgba(190, 195, 199, 0.5);
-			border-radius: 8rpx;
-		}
-	}
-
-	.applyIng::after {
-		content: '';
-		display: inline-block;
-		width: 15rpx;
-		height: 15rpx;
-		margin-left: 8rpx;
-		margin-top: -8rpx;
-		background: #5ea0ff;
-		border-radius: 50%;
-	}
-
-	.applyComplete::after {
-		content: '';
-		display: inline-block;
-		width: 15rpx;
-		height: 15rpx;
-		margin-left: 8rpx;
-		margin-top: -8rpx;
-		background: #63be50;
-		border-radius: 50%;
-	}
-
-	.applyReject::after {
-		content: '';
-		display: inline-block;
-		width: 15rpx;
-		height: 15rpx;
-		margin-left: 8rpx;
-		margin-top: -8rpx;
-		background: #f89901;
-		border-radius: 50%;
-	}
 </style>

@@ -99,6 +99,7 @@ export default {
 	 	title:'加载中...'
 	 })
 	 const userId = uni.getStorageSync('userInfo').id;
+
 	 const res = await this.getCartAction({
 		 userId: userId,
 		 pageNum: 1,
@@ -109,7 +110,7 @@ export default {
 		 return {
 			 ...item.book,
 			 cartId: item.id,
-			 businessId: item.business.id,
+			 businessId: item.businessId,
 			 state: false,
 			 count: item.quantity
 		 }
@@ -247,6 +248,9 @@ export default {
 			  	  		price: _this.totalPrice.toFixed(2),
 			  	  		userId: uni.getStorageSync('userInfo').id
 			  	  	})
+					uni.showToast({
+						title: '结算成功'
+					});
 			  	  }
 			  	}
 			  });

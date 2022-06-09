@@ -22,6 +22,9 @@ import {
 } from '../service/wallet/wallet.js'
 
 import {
+	getOrder
+} from '../service/order/order.js'
+import {
 	addCart,
 	getCart,
 	deleteCart,
@@ -79,6 +82,14 @@ const store = new Vuex.Store({
   	    return uni.$u.toast('提现失败');
   	  }
   	  return res.data
+  },
+  // 订单
+  async getOrderAction({commit},payload){
+	  const res = await getOrder(payload);
+	  if ( res.code !== '0') {
+	    return uni.$u.toast('获取订单失败');
+	  }
+	  return res.data
   },
   // 购物车相关接口 
   async addCartAction({commit},payload){
