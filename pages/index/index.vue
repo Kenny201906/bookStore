@@ -73,6 +73,7 @@
 
 <script>
 	import http from '@/service/request/index.js';
+	import { mapState,mapMutations } from 'vuex'
 	const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
 	let qqmapsdk;
 	export default {
@@ -90,9 +91,6 @@
 				goodsInfo: [1, 2, 3],
 			};
 		},
-	 async	onLoad() {
-			
-		},
 	 async	onShow() {
 	     if(uni.getStorageSync('token') === ''){
 			 uni.navigateTo({
@@ -102,7 +100,8 @@
 		 }
 		 
 	let salesCount = 983630;
-		 if(uni.getStorageSync('first') === ''){
+	console.log(this.isFirst);
+		 if(this.isFirst){
 	
 			 			uni.showLoading({
 			 				title:'加载中...'
@@ -119,7 +118,7 @@
 			 				})
 			 this.goodsInfo = [firstList,firstList,firstList]
 			 uni.hideLoading();
-			 uni.setStorageSync('first','first')
+			 this.changeFirstState(false)
 		 }
 		
 		 			uni.$on('chooseBookStore',(bookList)=>{
@@ -159,6 +158,7 @@
 		 			});
 		},
 		methods: {
+			...mapMutations(['changeFirstState']),
 			sortByField(arr, field) {
 				return arr.sort((a, b) => {
 					return b[field] - a[field]
@@ -192,6 +192,7 @@
 			}
 		},
 		computed: {
+			...mapState(['isFirst']),
 			// 数字转化
 			numberFormat() {
 				return function(value) {

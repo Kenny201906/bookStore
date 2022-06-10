@@ -60,7 +60,8 @@
 <script>
 	import uniStatusBar from '@/components/uni-ui/uni-status-bar/uni-status-bar.vue';
 	import {
-		mapActions
+		mapActions,
+		mapMutations
 	} from 'vuex'
 	export default {
 		components: {
@@ -92,6 +93,7 @@
 			};
 		},
 		methods: {
+			...mapMutations(['changeFirstState']),
 			...mapActions(['loginByAccountAction']),
 			goBack() {
 				uni.navigateBack({
@@ -151,6 +153,7 @@
 								url: '/pages/my/my'
 							})
 							uni.$u.toast('登录成功')
+							_this.changeFirstState(true)
 						}, 580)
 					}
 				}, 600);

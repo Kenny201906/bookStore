@@ -275,11 +275,6 @@ export default {
 			  	  		price: _this.totalPrice.toFixed(2),
 			  	  		userId: uni.getStorageSync('userInfo').id
 			  	  	})
-					if(res.code === '0'){
-						uni.showToast({
-							title: '结算成功'
-						});
-					}
 					uni.showLoading({
 						 	title:'加载中...'
 						 })

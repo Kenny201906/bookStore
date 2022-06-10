@@ -37,9 +37,12 @@ const store = new Vuex.Store({
   state: {
     forcedLogin: false, //是否强制登录
     hasLogin: false,
+	isFirst: true,
   },
   mutations: {
-
+    changeFirstState(state,payload){
+		state.isFirst = payload
+	}
   },
   actions: {
   
@@ -114,6 +117,7 @@ const store = new Vuex.Store({
 	  if ( res.code !== '0') {
 	    return uni.$u.toast(res.msg);
 	  } 
+	  uni.$u.toast("加入购物车成功")
 	  return res.data
   },
   async getCartAction({commit},payload){
@@ -128,6 +132,12 @@ const store = new Vuex.Store({
 	  if(res.code !== '0'){
 		  return uni.$u.toast('删除失败')
 	  }
+	  else{
+		   setTimeout(()=>{
+		   				 uni.$u.toast("删除成功") 
+		   },100)
+	  }
+	 
   },
   
   async settlementCartAction({commit},payload){
@@ -135,6 +145,12 @@ const store = new Vuex.Store({
 	  if(res.code !== '0'){
 		  return uni.$u.toast(res.msg)
 	  }
+	 else{
+		 setTimeout(()=>{
+				 uni.$u.toast("结算成功") 
+		 },100)
+
+	 }
 	  return res
   }
   },
